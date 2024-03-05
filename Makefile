@@ -24,7 +24,6 @@ clean :
 
 fclean : clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C mlx fclean
 	rm -f $(NAME)
 
 re :
