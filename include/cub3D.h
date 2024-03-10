@@ -27,7 +27,7 @@ typedef struct s_game_info
 	// char	*sprite_texture;
 }				t_game_info;
 
-int		error_exit(char *str);
+void	error_exit(char *str);
 void	invalid_file(char *file_name);
 
 
