@@ -9,6 +9,7 @@
 
 # include <stdlib.h>
 # include <fcntl.h>
+# include "../libft/libft.h"
 
 // test header
 # include <stdio.h>
