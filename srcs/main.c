@@ -11,6 +11,8 @@ void	init_game(t_game_info *game)
 	game->start_x = 0;
 	game->start_y = 0;
 	game->map = NULL;
+	game->map_width = 0;
+	game->map_height = 0;
 }
 
 int main(int ac, char **av)
