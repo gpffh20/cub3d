@@ -6,47 +6,62 @@ void	error_exit(char *str)
 	exit(1);
 }
 
-//void	get_color(int type, char *line, t_game_info *game)
-//{
-//	int r;
-//	int g;
-//	int b;
-//	char **color_info;
-//
-//	color_info = ft_split(line, ',');
-//	r = ft_atoi(color_info[0]);
-//	g = ft_atoi(color_info[1]);
-//	b = ft_atoi(color_info[2]);
-//	free(color_info);
-//	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-//		error_exit("Error: Invalid Color.\n");
-//	if (type == CEILING)
-//	// 이거 나중에 확인해보기
-//		game->ceiling_color = (r << 16) + (g << 8) + b;
-//	else if (type == FLOOR)
-//		game->floor_color = (r << 16) + (g << 8) + b;
-//	else
-//		error_exit("Error: Invalid Color Type.\n");
-//}
-//
-//int	get_path(char *line, t_game_info *game)
-//{
-//	if (ft_strncmp(line, "NO", 2) == 0 && game->no_path == NULL)
-//			game->no_path = ft_strdup(line + 3);
-//	else if (ft_strncmp(line, "SO", 2) == 0 && game->so_path == NULL)
-//			game->so_path = ft_strdup(line + 3);
-//	else if (ft_strncmp(line, "WE", 2) == 0 && game->we_path == NULL)
-//			game->we_path = ft_strdup(line + 3);
-//	else if (ft_strncmp(line, "EA", 2) == 0 && game->ea_path == NULL)
-//			game->ea_path = ft_strdup(line + 3);
-//	else if (ft_strncmp(line, "C", 1) == 0 && game->ceiling_color == NULL)
-//		get_color(CEILING, line + 2, game);
-//	else if (ft_strncmp(line, "F", 1) == 0 && game->floor_color == NULL)
-//		get_color(FLOOR, line + 2, game);
-//	else
-//		return (FAIL);
-//	return (SUCCESS);
-//}
+void	get_color(char type, char *line, t_game_info *game)
+{
+	int r;
+	int g;
+	int b;
+	char **color_info;
+
+	color_info = ft_split(line, ',');
+	r = ft_atoi(color_info[0]);
+	g = ft_atoi(color_info[1]);
+	b = ft_atoi(color_info[2]);
+	free(color_info);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		error_exit("Error: Invalid Color.\n");
+	if (type == 'C' && game->ceiling_color == -1)
+	// 이거 나중에 확인해보기
+		game->ceiling_color = (r << 16) + (g << 8) + b;
+	else if (type == 'F' && game->floor_color == -1)
+		game->floor_color = (r << 16) + (g << 8) + b;
+	else
+		error_exit("Error: Duplicate color.\n");
+}
+
+void	get_path(char type, char *line, t_game_info *game)
+{
+	if (type == 'N' && game->no_path == NULL)
+			game->no_path = ft_strdup(line + 3);
+	else if (type == 'S' && game->so_path == NULL)
+			game->so_path = ft_strdup(line + 3);
+	else if (type == 'W' && game->we_path == NULL)
+			game->we_path = ft_strdup(line + 3);
+	else if (type == 'E' && game->ea_path == NULL)
+			game->ea_path = ft_strdup(line + 3);
+	else
+		error_exit("Error: Duplicate path.\n");
+}
+
+void check_line(char *line, t_game_info *game)
+{
+	if (!ft_strncmp("NO ", line, 3) || !ft_strncmp("SO ", line, 3) || !ft_strncmp("WE ", line, 3) || !ft_strncmp("EA ", line, 3))
+		get_path(line[0], line, game);
+	else if (!ft_strncmp("C ", line, 2) || !ft_strncmp("F ", line, 2))
+		get_color(line[0], line + 2, game);
+	else if (!ft_strncmp(line, "\n", 1))
+		return ;
+	else if (!game->no_path || !game->so_path || !game->we_path || !game->ea_path || game->ceiling_color == -1 || game->floor_color == -1)
+		error_exit("Error: Missing information.\n");
+	// TODO: 1 또는 0 또는 방향인자 인지 확인하고 아니면 에러처리 로직 필요
+}
+
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
 void	get_map(char *map_file, t_game_info *game)
 {
@@ -54,29 +69,30 @@ void	get_map(char *map_file, t_game_info *game)
 	char	*line;
 	char	*tmp;
 	char	*total_line;
-	char	**map;
-	int	idx;
 
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		error_exit("Error: Cannot open map.\n");
 	line = get_next_line(fd);
 	total_line = ft_strdup("");
+	// TODO: path 정보는 map으로 들어가면 안돼서 다른 total_line을 전체 다 받으면 안됨.
 	while (line != NULL)
 	{
-		if (ft_strncmp(line, "\n", 1))
-			continue ;
-//		idx = 0;
-//		tmp = total_line;
-//		total_line = ft_strjoin(total_line, line);
-//		free(tmp);
-//		free(line);
-//		line = get_next_line(fd);
+		game->map_height++;
+		game->map_width = ft_max(game->map_width, ft_strlen(line));
+//		if (ft_strncmp(line, "\n", 1))
+//			continue ;
+		check_line(line, game);
+		tmp = total_line;
+		total_line = ft_strjoin(total_line, line);
+		free(tmp);
+		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
-	map = ft_split(total_line, '\n');
-	free(total_line);
-	game->map = map;
+	// TODO: split -> map 크기에 맞게 변형 필요
+//	game->map = ft_split(total_line, '\n');
+//	free(total_line);
 }
 
 void	invalid_file(char *file_name)
