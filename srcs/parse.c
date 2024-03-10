@@ -1,8 +1,9 @@
 #include "../include/cub3D.h"
 
-error_exit(char *str)
+void	error_exit(char *str)
 {
-	perror(str);
+	ft_putstr_fd(str, 2);
+//	perror(str);
 	exit(1);
 }
 
@@ -61,7 +62,7 @@ void	invalid_file(char *file_name)
 		return ;
 	}
 	free(tmp);
-	exit(error_handler("Error: map extension error."));
+	error_exit("Error: map extension error.");
 }
 
 void	get_map(char *map_file, t_game_info *game)

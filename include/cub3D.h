@@ -9,6 +9,7 @@
 
 # include <stdlib.h>
 # include <fcntl.h>
+# include "../libft/libft.h"
 
 // test header
 # include <stdio.h>
@@ -26,7 +27,7 @@ typedef struct s_game_info
 	// char	*sprite_texture;
 }				t_game_info;
 
-error_exit(char *str);
+void	error_exit(char *str);
 void	invalid_file(char *file_name);
 
 
