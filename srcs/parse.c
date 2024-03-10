@@ -47,38 +47,38 @@ void	error_exit(char *str)
 //		return (FAIL);
 //	return (SUCCESS);
 //}
-//
-//void	get_map(char *map_file, t_game_info *game)
-//{
-//	int		fd;
-//	char	*line;
-//	char	*tmp;
-//	char	*total_line;
-//	char	**map;
-//	int	idx;
-//
-//	fd = open(map_file, O_RDONLY);
-//	if (fd < 0)
-//		error_exit("Error: Cannot Open Map.\n");
-//	line = get_next_line(fd);
-//	total_line = ft_strdup("");
-//	while (line != NULL)
-//	{
-//		if (ft_strncmp(line, "\n", 1))
-//			continue ;
-////		idx = 0;
-////		tmp = total_line;
-////		total_line = ft_strjoin(total_line, line);
-////		free(tmp);
-////		free(line);
-////		line = get_next_line(fd);
-//	}
-//	close(fd);
-//	map = ft_split(total_line, '\n');
-//	free(total_line);
-//	game->map = map;
-//}
-//
+
+void	get_map(char *map_file, t_game_info *game)
+{
+	int		fd;
+	char	*line;
+	char	*tmp;
+	char	*total_line;
+	char	**map;
+	int	idx;
+
+	fd = open(map_file, O_RDONLY);
+	if (fd < 0)
+		error_exit("Error: Cannot open map.\n");
+	line = get_next_line(fd);
+	total_line = ft_strdup("");
+	while (line != NULL)
+	{
+		if (ft_strncmp(line, "\n", 1))
+			continue ;
+//		idx = 0;
+//		tmp = total_line;
+//		total_line = ft_strjoin(total_line, line);
+//		free(tmp);
+//		free(line);
+//		line = get_next_line(fd);
+	}
+	close(fd);
+	map = ft_split(total_line, '\n');
+	free(total_line);
+	game->map = map;
+}
+
 void	invalid_file(char *file_name)
 {
 	int		len;
