@@ -18,10 +18,10 @@ int main(int ac, char **av)
 	t_game_info game;
 
 	if (ac != 2)
-		error_exit("Error: Wrong Number Of Arguments.\n");
+		error_exit("Error: Wrong number of arguments.\n");
 	invalid_file(av[1]);
 	init_game(&game);
-	// get_map();
+	get_map(av[1], &game);
 	// printf("%s\n", "hello world!");
 	return (0);
 }
