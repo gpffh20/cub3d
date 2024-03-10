@@ -1,10 +1,26 @@
 #include "../include/cub3D.h"
 
+void	init_game(t_game_info *game)
+{
+	game->no_path = NULL;
+	game->so_path = NULL;
+	game->we_path = NULL;
+	game->ea_path = NULL;
+	game->floor_color = -1;
+	game->ceiling_color = -1;
+	game->start_x = 0;
+	game->start_y = 0;
+	game->map = NULL;
+}
+
 int main(int ac, char **av)
 {
+	t_game_info game;
+
 	if (ac != 2)
 		error_exit("Error: Wrong Number Of Arguments.\n");
 	invalid_file(av[1]);
+	init_game(&game);
 	// get_map();
 	// printf("%s\n", "hello world!");
 	return (0);
