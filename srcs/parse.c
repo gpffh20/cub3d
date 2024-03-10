@@ -3,7 +3,6 @@
 void	error_exit(char *str)
 {
 	ft_putstr_fd(str, 2);
-//	perror(str);
 	exit(1);
 }
 
@@ -83,12 +82,12 @@ void	get_map(char *map_file, t_game_info *game)
 	{
 		if (ft_strncmp(line, "\n", 1))
 			continue ;
-		idx = 0;
-		// tmp = total_line;
-		// total_line = ft_strjoin(total_line, line);
-		// free(tmp);
-		// free(line);
-		// line = get_next_line(fd);
+//		idx = 0;
+//		tmp = total_line;
+//		total_line = ft_strjoin(total_line, line);
+//		free(tmp);
+//		free(line);
+//		line = get_next_line(fd);
 	}
 	close(fd);
 	map = ft_split(total_line, '\n');
