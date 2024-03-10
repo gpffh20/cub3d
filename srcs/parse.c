@@ -1,6 +1,6 @@
 #include "../include/cub3D.h"
 
-error_exit(char *str)
+int	error_exit(char *str)
 {
 	perror(str);
 	exit(1);
