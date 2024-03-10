@@ -10,6 +10,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include "../mlx/mlx.h"
 
 // test header
 # include <stdio.h>
@@ -19,8 +20,8 @@ typedef struct s_game_info
 	char	*so_path;
 	char	*we_path;
 	char	*ea_path;
-	int		*floor_color;
-	int		*ceiling_color;
+	int		floor_color;
+	int		ceiling_color;
 	int		start_x;
 	int		start_y;
 	char	**map;
