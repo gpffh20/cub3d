@@ -27,12 +27,13 @@ typedef struct s_game_info
 	char	**map;
 	int		map_width;
 	int		map_height;
+	int		player_cnt;
 	// char	*sprite_texture;
 }				t_game_info;
 
 void	error_exit(char *str);
 void	invalid_file(char *file_name);
-void	get_map(char *map_file, t_game_info *game);
+void	get_info(char *map_file, t_game_info *game);
 
 
 
