@@ -13,6 +13,7 @@ void	init_game(t_game_info *game)
 	game->map = NULL;
 	game->map_width = 0;
 	game->map_height = 0;
+	game->player_cnt = 0;
 }
 
 int main(int ac, char **av)
@@ -23,7 +24,7 @@ int main(int ac, char **av)
 		error_exit("Error: Wrong number of arguments.\n");
 	invalid_file(av[1]);
 	init_game(&game);
-	get_map(av[1], &game);
+	get_info(av[1], &game);
 	// printf("%s\n", "hello world!");
 	return (0);
 }
