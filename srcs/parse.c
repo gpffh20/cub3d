@@ -153,8 +153,18 @@ char	**init_map(t_game_info *game)
 	return (map);
 }
 
+// 상, 좌 검색
+void	deep_check(t_game_info *game, char *line, int i)
+{
+	if (line[i] != '0')
+		return ;
+	if (line[0] == '0')
+		error_exit("Error: Invalid map.\n");
+	if (line[game->map_start - 2] == ' ' || line[i-1] == ' ')
+		error_exit("Error: Invalid map.\n");
+}
 
-void	fill_map(char *line, t_game_info *game, int type)
+void	check_map_valid(char *line, t_game_info *game, int type)
 {
 	int			i;
 
@@ -163,7 +173,7 @@ void	fill_map(char *line, t_game_info *game, int type)
 	{
 		while (line[i])
 		{
-			if (line[i] != '1' && line[i] != ' ')
+			if (line[i] != '1' && line[i] != ' ' && line[i] != '\n')
 				error_exit("Error: Invalid map.\n");
 			game->map[game->map_start - 1][i] = line[i];
 			i++;
@@ -178,46 +188,46 @@ void	fill_map(char *line, t_game_info *game, int type)
 	{
 		while (line[i])
 		{
-			if (line[i] == ' ')
-				game->map[game->map_height - 1][i] = '1';
+			deep_check(game, line, i);
+			game->map[game->map_start - 1][i] = line[i];
+			i++;
+		}
+		while (i < game->map_width)
+		{
+			game->map[game->map_start - 1][i] = ' ';
 			i++;
 		}
 	}
-//	while (line[i])
-//	{
-//		if
-//	}
 }
 
-int	find_map_start(char *line, t_game_info *game)
+void	fill_map(char *line, t_game_info *game)
 {
-	if (line[0] != 'N' || line[0] != 'S' || line[0] != 'W' || line[0] != 'E')
-		return (FAIL);
-	if (line[0] != 'F' || line[0] != 'C')
-		return (FAIL);
-	if (line[0] == '1' || line[0] == '0')
+	int i;
+
+	i = 0;
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	if (line[i] == '1' || line[i] == '0')
 	{
 		game->map_start++;
+		printf("%d  %s\n", game->map_start, line);
+
 		if (game->map_start - 1 == 0)
-			fill_map(line, game, SIDE);
+			check_map_valid(line, game, SIDE);
 		else if (game->map_start - 1 == game->map_height - 1)
-			fill_map(line, game, SIDE);
+			check_map_valid(line, game, SIDE);
 		else
-			fill_map(line, game, MIDDLE);
+			check_map_valid(line, game, MIDDLE);
 	}
-	return (SUCCESS);
 }
 
 void	get_map(char *map_file, t_game_info *game)
 {
 	int		fd;
 	char	*line;
-//	int		i;
 
 	if (game->player_cnt != 1)
 		error_exit("Error: Invalid player.\n");
-//	printf("map_start: %d\n", game->map_start);
-//	return ;
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		error_exit("Error: Cannot open map.\n");
@@ -226,11 +236,7 @@ void	get_map(char *map_file, t_game_info *game)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		find_map_start(line, game);
-		printf("%s\n", game->map[game->map_start-1]);
-//		i = 0;
-//		if (i == 0 || i == game->map_height - 1)
-//			fill_map(line, game, SIDE);
+		fill_map(line, game);
 		free(line);
 		line = get_next_line(fd);
 	}
