@@ -132,35 +132,81 @@ void	get_info(char *map_file, t_game_info *game)
 }
 // TODO: player_cnt == 0 일 때 안걸러짐
 
-//void	get_info(char *map_file, t_game_info *game)
-//{
-//	int		fd;
-//	char	*line;
-////	char	*tmp;
-////	char	*total_line;
-//
-//	fd = open(map_file, O_RDONLY);
-//	if (fd < 0)
-//		error_exit("Error: Cannot open map.\n");
-//	line = get_next_line(fd);
-////	total_line = ft_strdup("");
-////	TODO: path 정보는 map으로 들어가면 안돼서 다른 total_line을 전체 다 받으면 안됨.
-//	while (line != NULL)
-//	{
-////		game->map_height++;
-////		game->map_width = ft_max(game->map_width, ft_strlen(line));
-//		check_line(line, game);
-////		tmp = total_line;
-////		total_line = ft_strjoin(total_line, line);
-////		free(tmp);
-//		free(line);
-//		line = get_next_line(fd);
-//	}
-//	close(fd);
-//	// TODO: split -> map 크기에 맞게 변형 필요
-////	game->map = ft_split(total_line, '\n');
-////	free(total_line);
-//}
+char	**init_map(t_game_info *game)
+{
+	char	**map;
+	int i;
+
+	map = (char **)malloc(sizeof(char *) * (game->map_height + 1));
+	map[game->map_height] = NULL;
+	i = 0;
+	while (i < game->map_height)
+	{
+		map[i] = (char *)malloc(sizeof(char) * (game->map_width + 1));
+		ft_memset(map[i], ' ', game->map_width);
+		map[i][game->map_width] = '\0';
+		i++;
+	}
+	return (map);
+}
+
+
+void	fill_map(char *line, t_game_info *game, int type)
+{
+	int			i;
+
+	i = 0;
+	while (ft_isspace(line[i]))
+		i++;
+	if (type == SIDE)
+	{
+		while (line[i])
+		{
+			if (line[i] != '1' && line[i] != ' ')
+				error_exit("Error: Invalid map.\n");
+		}
+	}
+	else if (type == MIDDLE)
+	{
+		while (line[i])
+		{
+			if (line[i] == ' ')
+				game->map[game->map_height - 1][i] = '1';
+			i++;
+		}
+	}
+	while (line[i])
+	{
+		if
+	}
+}
+
+void	get_map(char *map_file, t_game_info *game)
+{
+	int		fd;
+	char	*line;
+	int		i;
+
+	if (game->player_cnt != 1)
+		error_exit("Error: Invalid player.\n");
+	fd = open(map_file, O_RDONLY);
+	if (fd < 0)
+		error_exit("Error: Cannot open map.\n");
+	game->map = init_map(game);
+	i = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		if (i == 0 || i == game->map_height - 1)
+			fill_map(line, game, SIDE);
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	// TODO: split -> map 크기에 맞게 변형 필요
+//	game->map = ft_split(total_line, '\n');
+//	free(total_line);
+}
 
 void	invalid_file(char *file_name)
 {
