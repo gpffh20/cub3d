@@ -57,7 +57,7 @@ void	get_path(char type, char *line, t_game_info *game)
 
 int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n')
+	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }
@@ -69,10 +69,14 @@ void check_map(char *line, t_game_info *game)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != '0' && !ft_isspace(line[i]))
+		if (line[i] != '1' && line[i] != '0' && !ft_isspace(line[i]) && line[i] !='\n')
 		{
 			if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E') && game->player_cnt == 0)
+			{
 				game->player_cnt++;
+				game->start_x = i;
+				game->start_y = game->map_height;
+			}
 			else
 				error_exit("Error: Invalid map.\n");
 		}
@@ -90,30 +94,27 @@ int	ft_max(int a, int b)
 
 void check_line(char *line, t_game_info *game)
 {
-//	int i;
+	int	i;
 
 	if (!ft_strncmp("NO ", line, 3) || !ft_strncmp("SO ", line, 3) ||
 		!ft_strncmp("WE ", line, 3) || !ft_strncmp("EA ", line, 3))
 		get_path(line[0], line, game);
 	else if (!ft_strncmp("C ", line, 2) || !ft_strncmp("F ", line, 2))
 		get_color(line[0], line + 2, game);
-//	i = 0;
-//	while (ft_isspace(line[i]))
-//		i++;
-	if (game->map_start == 1 && ft_isspace(line[0]))
+	if (game->map_start == 1 && line[0] == '\n')
 		error_exit("Error: Invalid map.\n");
-	if (line[0] == '1' || line[0] == '0')
+	i = 0;
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	if (line[i] == '1' || line[i] == '0')
 	{
 		game->map_start = 1;
 		if (!game->no_path || !game->so_path || !game->we_path || !game->ea_path || game->ceiling_color == -1 || game->floor_color == -1)
 			error_exit("Error: Missing information.\n");
 		check_map(line, game);
-		printf("%s\n", line);
 		game->map_height++;
 		game->map_width = ft_max(game->map_width, ft_strlen(line));
 	}
-	if (game->map_height > 0 && line[0] == '\n')
-		game->map_height++;
 }
 
 void	get_info(char *map_file, t_game_info *game)
@@ -158,14 +159,19 @@ void	fill_map(char *line, t_game_info *game, int type)
 	int			i;
 
 	i = 0;
-	while (ft_isspace(line[i]))
-		i++;
 	if (type == SIDE)
 	{
 		while (line[i])
 		{
 			if (line[i] != '1' && line[i] != ' ')
 				error_exit("Error: Invalid map.\n");
+			game->map[game->map_start - 1][i] = line[i];
+			i++;
+		}
+		while (i < game->map_width)
+		{
+			game->map[game->map_start - 1][i] = ' ';
+			i++;
 		}
 	}
 	else if (type == MIDDLE)
@@ -185,38 +191,20 @@ void	fill_map(char *line, t_game_info *game, int type)
 
 int	find_map_start(char *line, t_game_info *game)
 {
-	(void)game;
-	int i;
-
 	if (line[0] != 'N' || line[0] != 'S' || line[0] != 'W' || line[0] != 'E')
 		return (FAIL);
 	if (line[0] != 'F' || line[0] != 'C')
 		return (FAIL);
-	i = 0;
-	while (ft_isspace(line[i]))
-		i++;
-//	if (line[0] == '\n')
-//		// width 만큼 공백으로 채우기
-//		;
-//	else
-//	{
-//		i = 0;
-//		ft_strlcpy(game->map[i], line, game->map_width + 1);
-//	}
-	if (line[i] == '1' || line[i] == '0')
+	if (line[0] == '1' || line[0] == '0')
 	{
-		printf("%s\n", line);
-
-
-//		if (!game->no_path || !game->so_path || !game->we_path || !game->ea_path || game->ceiling_color == -1 || game->floor_color == -1)
-//			error_exit("Error: Missing information.\n");
-//		check_map(line, game);
-//		printf("%s\n", line);
-//		game->map_height++;
-//		game->map_width = ft_max(game->map_width, ft_strlen(line));
+		game->map_start++;
+		if (game->map_start - 1 == 0)
+			fill_map(line, game, SIDE);
+		else if (game->map_start - 1 == game->map_height - 1)
+			fill_map(line, game, SIDE);
+		else
+			fill_map(line, game, MIDDLE);
 	}
-//	if (game->map_height > 0 && line[0] == '\n')
-//		game->map_height++;
 	return (SUCCESS);
 }
 
@@ -224,31 +212,29 @@ void	get_map(char *map_file, t_game_info *game)
 {
 	int		fd;
 	char	*line;
-	int		i;
+//	int		i;
 
 	if (game->player_cnt != 1)
 		error_exit("Error: Invalid player.\n");
+//	printf("map_start: %d\n", game->map_start);
+//	return ;
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		error_exit("Error: Cannot open map.\n");
 	game->map = init_map(game);
+	game->map_start = 0;
 	line = get_next_line(fd);
-	i = 0;
 	while (line != NULL)
 	{
 		find_map_start(line, game);
-		// map 시작점 찾기
-		// 개행이 나오면 전체 스페이스로 교체
-		i = 0;
-		if (i == 0 || i == game->map_height - 1)
-			fill_map(line, game, SIDE);
+		printf("%s\n", game->map[game->map_start-1]);
+//		i = 0;
+//		if (i == 0 || i == game->map_height - 1)
+//			fill_map(line, game, SIDE);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	// TODO: split -> map 크기에 맞게 변형 필요
-//	game->map = ft_split(total_line, '\n');
-//	free(total_line);
 }
 
 void	invalid_file(char *file_name)
