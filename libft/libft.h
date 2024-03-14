@@ -70,4 +70,7 @@ char	*get_next_line(int fd);
 char	*ft_read_line(int fd, char *storage);
 char	*ft_extract_line(char **storage);
 
+int		ft_max(int a, int b);
+int		ft_isspace(char c);
+
 #endif
