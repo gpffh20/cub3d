@@ -40,6 +40,8 @@ SRCS = 	ft_isalpha.c \
 		ft_printf.c \
 		ft_printer.c \
 		get_next_line.c \
+		ft_max.c \
+		ft_isspace.c \
 
 OBJS = $(SRCS:.c=.o)
 

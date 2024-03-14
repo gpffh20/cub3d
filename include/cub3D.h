@@ -36,6 +36,14 @@ void	error_exit(char *str);
 void	invalid_file(char *file_name);
 void	get_info(char *map_file, t_game_info *game);
 void	get_map(char *map_file, t_game_info *game);
-
+void	check_map_valid(char *line, t_game_info *game, int type);
+void	fill_map(char *line, t_game_info *game);
+void	deep_check(t_game_info *game, char *line, int i);
+void	check_line(char *line, t_game_info *game);
+char	**init_map(t_game_info *game);
+void	check_map(char *line, t_game_info *game);
+void	ft_free(char **str);
+void	get_color(char type, char *line, t_game_info *game);
+void	get_path(char type, char *line, t_game_info *game);
 
 #endif
