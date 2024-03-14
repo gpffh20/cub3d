@@ -22,16 +22,20 @@
 # define CEILING 1
 # define FLOOR 2
 
+# define SCREEN_WIDTH 1150
+# define SCREEN_HEIGHT 800
 
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
 
 # include "../libft/libft.h"
-# include "../mlx/mlx.h"
+# include "../mlx_lib/mlx.h"
 
 typedef struct s_game_info
 {
+	void	*mlx;
+	void	*win;
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -61,5 +65,6 @@ void	check_map(char *line, t_game_info *game);
 void	ft_free(char **str);
 void	get_color(char type, char *line, t_game_info *game);
 void	get_path(char type, char *line, t_game_info *game);
+void	paint_background(t_game_info *game);
 
 #endif
