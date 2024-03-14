@@ -35,7 +35,7 @@ $(NAME) : $(OBJECTS)
 	@echo $(CYAN) "⚡︎	[  mlx  ]	Ready to run mlx" $(RESET)
 	@echo $(GREEN) "⚡︎	[ cub3D ]	Ready to run cub3D" $(RESET)
 
-%.o: %.c cub3D.h
+%.o: %.c ./include/cub3D.h
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
