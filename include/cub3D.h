@@ -7,6 +7,22 @@
 # define SIDE 1
 # define MIDDLE 2
 
+# define W 13
+# define S 1
+# define A 0
+# define D 2
+# define ROTATE_LEFT 123
+# define ROTATE_RIGHT 124
+# define ESC 53
+
+# define DESTROY 17
+# define KEY_RELEASE 3
+# define KEY_PRESS 2
+
+# define CEILING 1
+# define FLOOR 2
+
+
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
