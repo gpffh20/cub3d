@@ -27,5 +27,13 @@ int main(int ac, char **av)
 	init_game(&game);
 	get_info(av[1], &game);
 	get_map(av[1], &game);
+
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	paint_background(&game);
+	// draw_map(&game);
+	// mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
+	// mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }

@@ -2,7 +2,7 @@ NAME	= cub3D
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 LDLIBS	= -Llibft -lft
-LDMLX	= -Lmlx -lmlx -framework OpenGL -framework AppKit
+LDMLX	= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 SOURCES =	srcs/main.c \
 			srcs/parsing/check_line.c \
@@ -18,12 +18,13 @@ SOURCES =	srcs/main.c \
 			srcs/parsing/get_path.c \
 			srcs/parsing/init_map.c	\
 			srcs/parsing/invalid_file.c \
+			srcs/raycasting/draw.c \
 
 
 OBJECTS	= $(SOURCES:.c=.o)
 
 LIBFT_DIR = ./libft
-MLX_DIR = ./mlx
+MLX_DIR = ./mlx_lib
 all : $(NAME)
 
 $(NAME) : $(OBJECTS)
