@@ -1,11 +1,24 @@
 NAME	= cub3D
 CC		= cc
-CFLAGS	= #-Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 LDLIBS	= -Llibft -lft
 LDMLX	= -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 SOURCES =	srcs/main.c \
-			srcs/parse.c
+			srcs/parsing/check_line.c \
+			srcs/parsing/check_map.c \
+			srcs/parsing/check_map_valid.c \
+			srcs/parsing/deep_check.c \
+			srcs/parsing/error_exit.c \
+			srcs/parsing/fill_map.c \
+			srcs/parsing/ft_free.c \
+			srcs/parsing/get_color.c \
+			srcs/parsing/get_info.c \
+			srcs/parsing/get_map.c \
+			srcs/parsing/get_path.c \
+			srcs/parsing/init_map.c	\
+			srcs/parsing/invalid_file.c \
+
 
 OBJECTS	= $(SOURCES:.c=.o)
 
@@ -21,6 +34,9 @@ $(NAME) : $(OBJECTS)
 	@echo $(YELLOW) "⚡︎	[ libft ]	Ready to run libft" $(RESET)
 	@echo $(CYAN) "⚡︎	[  mlx  ]	Ready to run mlx" $(RESET)
 	@echo $(GREEN) "⚡︎	[ cub3D ]	Ready to run cub3D" $(RESET)
+
+%.o: %.c cub3D.h
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	@$(MAKE) -C $(LIBFT_DIR) clean
