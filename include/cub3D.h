@@ -7,10 +7,10 @@
 # define SIDE 1
 # define MIDDLE 2
 
-# define W 13
-# define S 1
-# define A 0
-# define D 2
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_A 0
+# define KEY_D 2
 # define ROTATE_LEFT 123
 # define ROTATE_RIGHT 124
 # define ESC 53
@@ -42,6 +42,7 @@ typedef struct s_game_info
 	char	*ea_path;
 	int		floor_color;
 	int		ceiling_color;
+	char	start_dir;
 	int		start_x;
 	int		start_y;
 	char	**map;
@@ -66,5 +67,6 @@ void	ft_free(char **str);
 void	get_color(char type, char *line, t_game_info *game);
 void	get_path(char type, char *line, t_game_info *game);
 void	paint_background(t_game_info *game);
+void	draw_map(t_game_info *game);
 
 #endif
