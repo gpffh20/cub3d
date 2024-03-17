@@ -34,16 +34,6 @@ void	init_west(t_game_info *game)
 
 void init_ray_dir(t_game_info *game, char start_dir)
 {
-	int player_x;
-	int player_y;
-
-
-	player_x = (int)(game->ray.player.x - 0.5);
-	player_y = (int)(game->ray.player.y - 0.5);
-
-	(void) player_x;
-	(void) player_y;
-
 	if (start_dir == 'N')
 		init_north(game);
 	else if (start_dir == 'S')
@@ -52,8 +42,8 @@ void init_ray_dir(t_game_info *game, char start_dir)
 		init_west(game);
 	else if (start_dir == 'E')
 		init_east(game);
-	// game->map[player_x][player_y] = '0';
 }
+
 void check_map(char *line, t_game_info *game)
 {
 	int i;
@@ -68,12 +58,10 @@ void check_map(char *line, t_game_info *game)
 				game->player_cnt++;
 				game->ray.player.x = i + 0.5; // player 좌표 초기화 하면서 격자점으로 옮기기
 				game->ray.player.y = game->map_height + 0.5;
-				init_ray_dir(game, line[i]);
 			}
 			else
 				error_exit("Error: Invalid map.\n");
 		}
 		i++;
 	}
-
 }
