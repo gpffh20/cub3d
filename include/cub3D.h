@@ -60,9 +60,9 @@ typedef struct s_raycast
 	t_point_double	ray_dir;
 	t_point_double	side_dist;
 	t_point_double	delta_dist;
-	t_point_double	player; // map 좌표
-	t_point_int			player_pos; // map 좌표
-	// t_point_int		step;
+	t_point_double	player; // map 좌표 double
+	t_point_int			player_pos; // map section 좌표 int
+	t_point_int			step_dir;
 	int				side;
 	int				line_height;
 	int				draw_start;
