@@ -14,6 +14,7 @@ void check_map(char *line, t_game_info *game)
 				game->player_cnt++;
 				game->start_x = i;
 				game->start_y = game->map_height;
+				game->start_dir = line[i];
 			}
 			else
 				error_exit("Error: Invalid map.\n");
