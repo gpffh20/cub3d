@@ -110,5 +110,6 @@ void	paint_background(t_game_info *game);
 void	draw_map(t_game_info *game);
 void	paint_background(t_game_info *game);
 void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor);
+void init_ray_dir(t_game_info *game, char start_dir);
 
 #endif

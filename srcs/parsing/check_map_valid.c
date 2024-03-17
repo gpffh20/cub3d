@@ -26,6 +26,11 @@ void	check_map_valid(char *line, t_game_info *game, int type)
 		{
 			deep_check(game, line, i);
 			game->map[game->map_start - 1][i] = line[i];
+			if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+			{
+				init_ray_dir(game, line[i]);
+				game->map[game->map_start - 1][i] = '0';
+			}
 			i++;
 		}
 		while (i < game->map_width)
