@@ -28,12 +28,54 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <math.h>
 
 # include "../libft/libft.h"
 # include "../mlx_lib/mlx.h"
 
+typedef struct s_coordinate_point_int
+{
+	int			x;
+	int			y;
+}				t_point_int;
+
+typedef struct s_coordinate_point_double
+{
+	double	x;
+	double	y;
+}				t_point_double;
+
+typedef struct s_texture
+{
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		floor;
+	int		ceiling;
+}	t_texture;
+
+typedef struct s_raycast
+{
+	t_point_double	ray_dir;
+	t_point_double	side_dist;
+	t_point_double	delta_dist;
+	t_point_double	player; // map 좌표
+	t_point_int			player_pos; // map 좌표
+	// t_point_int		step;
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	double			hit;
+}	t_raycast;
+
 typedef struct s_game_info
 {
+	t_raycast	ray;
+	t_texture	texture;
+	t_point_double view_dir;
+	t_point_double plane;
 	void	*mlx;
 	void	*win;
 	char	*no_path;
@@ -42,15 +84,12 @@ typedef struct s_game_info
 	char	*ea_path;
 	int		floor_color;
 	int		ceiling_color;
-	char	start_dir;
-	int		start_x;
-	int		start_y;
 	char	**map;
 	int		map_width;
 	int		map_height;
+	// t_point_int	player;
 	int		player_cnt;
 	int		map_start;
-	// char	*sprite_texture;
 }				t_game_info;
 
 void	error_exit(char *str);
@@ -67,6 +106,9 @@ void	ft_free(char **str);
 void	get_color(char type, char *line, t_game_info *game);
 void	get_path(char type, char *line, t_game_info *game);
 void	paint_background(t_game_info *game);
+
 void	draw_map(t_game_info *game);
+void	paint_background(t_game_info *game);
+void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor);
 
 #endif
