@@ -11,7 +11,7 @@ void	paint_background(t_game_info *game)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_pixel_put(game->mlx, game->win, x, y, game->floor_color);
+			mlx_pixel_put(game->mlx, game->win, x, y, game->ceiling_color);
 			x++;
 		}
 		y++;
@@ -21,13 +21,15 @@ void	paint_background(t_game_info *game)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_pixel_put(game->mlx, game->win, x, y, game->ceiling_color);
+			mlx_pixel_put(game->mlx, game->win, x, y, game->floor_color);
 			x++;
 		}
 		y++;
 	}
 }
-// void	draw_map(t_game_info *game)
-// {
-
-// }
+void	draw_map(t_game_info *game)
+{
+	(void)game;
+	paint_background(game);
+	return ;
+}
