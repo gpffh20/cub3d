@@ -77,7 +77,8 @@ int main(int ac, char **av)
 	init_game(&game);
 	get_info(av[1], &game);
 	get_map(av[1], &game);
-	draw_map(&game);
+	init_texture(&game);
+	mlx_loop_hook(game.mlx, &draw_map, &game);
 	// mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
 	// mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
 	// mlx_key_hook(game.win, &exit_game, &game);
