@@ -71,7 +71,7 @@ typedef struct s_raycast
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
-	int				hit_ratio;
+	double				hit_ratio;
 }	t_raycast;
 
 typedef struct s_game_info
@@ -115,7 +115,7 @@ void	get_color(char type, char *line, t_game_info *game);
 void	get_path(char type, char *line, t_game_info *game);
 void	paint_background(t_game_info *game);
 
-void	draw_map(t_game_info *game);
+int	draw_map(t_game_info *game);
 void	paint_background(t_game_info *game);
 void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor);
 void init_ray_dir(t_game_info *game, char start_dir);
