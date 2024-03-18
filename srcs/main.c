@@ -21,8 +21,29 @@ void  init_raycast(t_raycast *ray)
 	ray->hit_ratio = 0;
 }
 
+int check_xpm(t_game_info *game)
+{
+	int fd;
+
+	fd = open(game->no_path, O_RDONLY);
+	if (fd < 0 || close(fd) < 0)
+		return (FAIL);
+	fd = open(game->so_path, O_RDONLY);
+	if (fd < 0 || close(fd) < 0)
+		return (FAIL);
+	fd = open(game->we_path, O_RDONLY);
+	if (fd < 0 || close(fd) < 0)
+		return (FAIL);
+	fd = open(game->ea_path, O_RDONLY);
+	if (fd < 0 || close(fd) < 0)
+		return (FAIL);
+	return (SUCCESS);
+}
+
 void init_texture(t_game_info *game)
 {
+	if (check_xpm(game) == FAIL)
+		error_exit("Error: Invalid texture file.\n");
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	game->window.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -79,9 +100,9 @@ int main(int ac, char **av)
 	get_map(av[1], &game);
 	init_texture(&game);
 	mlx_loop_hook(game.mlx, &draw_map, &game);
-	// mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
-	// mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
-	// mlx_key_hook(game.win, &exit_game, &game);
+//	mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
+//	mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
+//	mlx_key_hook(game.win, &exit_game, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }
