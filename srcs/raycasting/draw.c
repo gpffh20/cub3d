@@ -103,6 +103,7 @@ void	draw_map(t_game_info *game)
 	int monitor;
 
 	monitor = 0;
+	init_texture(game);
 	paint_background(game);
 	while (monitor < SCREEN_WIDTH)
 	{
@@ -110,6 +111,7 @@ void	draw_map(t_game_info *game)
 		init_vectors(&game->ray, game);
 		dda(game, &game->ray);
 		calc_wall_length(game, &game->ray);
+		// TODO: 부딛힌 벽 방향, 좌표 기준으로 mlx 값 저장해둬야함
 
 	// 구조체 값 확인 코드
 	// printf("Monitor: %d\n", monitor);
@@ -124,8 +126,6 @@ void	draw_map(t_game_info *game)
 	// printf("Draw Start: %d, Draw End: %d\n", game->ray.draw_start, game->ray.draw_end);
 	// printf("Hit Ratio: %d\n\n", game->ray.hit_ratio);
 	// printf("draw_start: %d, draw_end: %d\n", game->ray.draw_start, game->ray.draw_end);
-
-		// TODO: 부딛힌 벽 방향, 좌표 기준으로 mlx 값 저장해둬야함
 		monitor++;
 	}
 	return ;

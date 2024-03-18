@@ -12,26 +12,6 @@
 
 #include "libft.h"
 
-static char	*ft_strndup(const char *s, size_t n)
-{
-	size_t	i;
-	char	*str;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	str = (char *)malloc(sizeof(char) * (n + 1));
-	if (!str)
-		return (0);
-	while (i < n)
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
 static char	**ft_free(char **answer)
 {
 	size_t	i;
