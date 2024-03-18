@@ -50,12 +50,13 @@ typedef struct s_coordinate_point_double
 
 typedef struct s_texture
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	int		floor;
-	int		ceiling;
+	void *img;
+	char *addr;
+	int bpp;
+	int line_length;
+	int endian;
+	int width;
+	int height;
 }	t_texture;
 
 typedef struct s_raycast
@@ -75,24 +76,28 @@ typedef struct s_raycast
 
 typedef struct s_game_info
 {
+	void *mlx;
+	void *win;
 	t_raycast	ray;
-	t_texture	texture;
 	t_point_double view_dir;
 	t_point_double plane;
+	t_texture window;
+	t_texture no_texture;
+	t_texture so_texture;
+	t_texture we_texture;
+	t_texture ea_texture;
+	char *no_path;
+	char *so_path;
+	char *we_path;
+	char *ea_path;
 	double perp_wall_dist;
-	void	*mlx;
-	void	*win;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor_color;
-	int		ceiling_color;
 	char	**map;
 	int		map_width;
 	int		map_height;
 	int		player_cnt;
 	int		map_start;
+	int		ceiling_color;
+	int		floor_color;
 }				t_game_info;
 
 void	error_exit(char *str);
@@ -113,5 +118,9 @@ void	paint_background(t_game_info *game);
 void	draw_map(t_game_info *game);
 void	paint_background(t_game_info *game);
 void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor);
+
+void	init_game(t_game_info *game);
+void	init_raycast(t_raycast *ray);
+void	init_texture(t_game_info *game);
 
 #endif
