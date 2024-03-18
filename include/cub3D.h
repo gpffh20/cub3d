@@ -7,6 +7,9 @@
 # define SIDE 1
 # define MIDDLE 2
 
+# define TRUE 1
+# define FALSE 0
+
 # define HOR_LINE 0
 # define VER_LINE 1
 
@@ -75,6 +78,16 @@ typedef struct s_raycast
 	double				hit_ratio;
 }	t_raycast;
 
+typedef struct s_move_flag
+{
+	int	move_n;
+	int	move_s;
+	int	move_w;
+	int	move_e;
+	int	rotate_r;
+	int	rotate_l;
+}	t_move_flag;
+
 typedef struct s_game_info
 {
 	void *mlx;
@@ -99,6 +112,8 @@ typedef struct s_game_info
 	int		map_start;
 	int		ceiling_color;
 	int		floor_color;
+
+	t_move_flag	move_flag;
 }				t_game_info;
 
 void	error_exit(char *str);
@@ -124,5 +139,7 @@ void init_ray_dir(t_game_info *game, char start_dir);
 void	init_game(t_game_info *game);
 void	init_raycast(t_raycast *ray);
 void	init_texture(t_game_info *game);
+
+void check_xpm(t_game_info *game);
 
 #endif
