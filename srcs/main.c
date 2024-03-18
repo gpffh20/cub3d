@@ -21,29 +21,26 @@ void  init_raycast(t_raycast *ray)
 	ray->hit_ratio = 0;
 }
 
-int check_xpm(t_game_info *game)
+void check_xpm(t_game_info *game)
 {
 	int fd;
 
 	fd = open(game->no_path, O_RDONLY);
 	if (fd < 0 || close(fd) < 0)
-		return (FAIL);
+		error_exit("Error: Invalid texture file.\n");
 	fd = open(game->so_path, O_RDONLY);
 	if (fd < 0 || close(fd) < 0)
-		return (FAIL);
+		error_exit("Error: Invalid texture file.\n");
 	fd = open(game->we_path, O_RDONLY);
 	if (fd < 0 || close(fd) < 0)
-		return (FAIL);
+		error_exit("Error: Invalid texture file.\n");
 	fd = open(game->ea_path, O_RDONLY);
 	if (fd < 0 || close(fd) < 0)
-		return (FAIL);
-	return (SUCCESS);
+		error_exit("Error: Invalid texture file.\n");
 }
 
 void init_texture(t_game_info *game)
 {
-	if (check_xpm(game) == FAIL)
-		error_exit("Error: Invalid texture file.\n");
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	game->window.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -57,7 +54,7 @@ void init_texture(t_game_info *game)
 	game->ea_texture.img = mlx_xpm_file_to_image(game->mlx, game->ea_path, &game->ea_texture.width, &game->ea_texture.height);
 	game->ea_texture.addr = mlx_get_data_addr(game->ea_texture.img, &game->ea_texture.bpp, &game->ea_texture.line_length, &game->ea_texture.endian);
 	mlx_put_image_to_window(game->mlx, game->win, game->window.img, 0, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, game->no_texture.img, 0, 0);
+//	 mlx_put_image_to_window(game->mlx, game->win, game->no_texture.img, 0, 0);
 }
 
 void	init_game(t_game_info *game)
@@ -88,6 +85,43 @@ int	exit_game(t_game_info *game)
 	return (0);
 }
 
+int	key_press(int keycode, t_game_info *game)
+{
+	if (keycode == ROTATE_LEFT)
+		game->move_flag.rotate_l = TRUE;
+	else if (keycode == ROTATE_RIGHT)
+		game->move_flag.rotate_r = TRUE;
+	else if (keycode == KEY_W)
+		game->move_flag.move_n = TRUE;
+	else if (keycode == KEY_S)
+		game->move_flag.move_s = TRUE;
+	else if (keycode == KEY_D)
+		game->move_flag.move_e = TRUE;
+	else if (keycode == KEY_A)
+		game->move_flag.move_w = TRUE;
+	else if (keycode == ESC)
+		exit_game(game);
+	return (EXIT_SUCCESS);
+}
+
+int	key_release(int keycode, t_game_info *game)
+{
+	if (keycode == ROTATE_LEFT)
+		game->move_flag.rotate_l = FALSE;
+	else if (keycode == ROTATE_RIGHT)
+		game->move_flag.rotate_r = FALSE;
+	else if (keycode == KEY_W)
+		game->move_flag.move_n = FALSE;
+	else if (keycode == KEY_S)
+		game->move_flag.move_s = FALSE;
+	else if (keycode == KEY_D)
+		game->move_flag.move_e = FALSE;
+	else if (keycode == KEY_A)
+		game->move_flag.move_w = FALSE;
+	return (EXIT_SUCCESS);
+}
+
+
 int main(int ac, char **av)
 {
 	t_game_info game;
@@ -99,10 +133,10 @@ int main(int ac, char **av)
 	get_info(av[1], &game);
 	get_map(av[1], &game);
 	init_texture(&game);
+	mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
+	mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
+	mlx_key_hook(game.win, &exit_game, &game);
 	mlx_loop_hook(game.mlx, &draw_map, &game);
-//	mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
-//	mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
-//	mlx_key_hook(game.win, &exit_game, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

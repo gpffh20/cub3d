@@ -1,5 +1,14 @@
 #include "../../include/cub3D.h"
 
+void	my_mlx_pixel_put(t_texture *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	*(unsigned int *)dst = color;
+}
+
+
 void	paint_background(t_game_info *game)
 {
 	int	x;
@@ -11,7 +20,7 @@ void	paint_background(t_game_info *game)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_pixel_put(game->mlx, game->win, x, y, game->ceiling_color);
+			my_mlx_pixel_put(&game->window, x, y, game->ceiling_color);
 			x++;
 		}
 		y++;
@@ -21,7 +30,7 @@ void	paint_background(t_game_info *game)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 		{
-			mlx_pixel_put(game->mlx, game->win, x, y, game->floor_color);
+			my_mlx_pixel_put(&game->window, x, y, game->floor_color);
 			x++;
 		}
 		y++;
@@ -71,7 +80,7 @@ void	dda(t_game_info *game, t_raycast *ray)
 			ray->side_dist.y += ray->delta_dist.y;
 			ray->player_pos.y += ray->step_dir.y;
 		}
-		if (game->map[ray->player_pos.y][ray->player_pos.x] == '1')
+		if (game->map[ray->player_pos.y][ray->player_pos.x] != '0')
 			hit_flag = 1;
 	}
 }
@@ -80,15 +89,16 @@ void	calc_wall_length(t_game_info *game, t_raycast *ray)
 {
 	if (ray->side == VER_LINE)
 	{
-		game->perp_wall_dist = (ray->player_pos.x - game->ray.player.x + (1 - ray->step_dir.x) / 2) / ray->ray_dir.x;
-		ray->hit_ratio = ray->player.y + game->perp_wall_dist * ray->ray_dir.y;
+		game->perp_wall_dist = ray->side_dist.y - ray->delta_dist.y;
+		ray->hit_ratio = ray->player.x + game->perp_wall_dist * ray->ray_dir.x;
 	}
 	else
 	{
-		game->perp_wall_dist = (ray->player_pos.y - game->ray.player.y + (1 - ray->step_dir.y) / 2) / ray->ray_dir.y;
-		ray->hit_ratio = ray->player.x + game->perp_wall_dist * ray->ray_dir.x;
+		game->perp_wall_dist = ray->side_dist.x - ray->delta_dist.x;
+		ray->hit_ratio = ray->player.y + game->perp_wall_dist * ray->ray_dir.y;
 	}
 	ray->hit_ratio -= floor(ray->hit_ratio);
+	// 여기부터!
 	ray->line_height = (int)(SCREEN_HEIGHT / game->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
 	ray->draw_end = ray->line_height / 2 + SCREEN_HEIGHT / 2;
@@ -133,14 +143,6 @@ int	get_color_in_texture(t_texture *component, int x, int y)
 		return (0);
 	}
 	return (res);
-}
-
-void	my_mlx_pixel_put(t_texture *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
 }
 
 void wall_in_range(t_game_info *game, int monitor)
@@ -190,6 +192,8 @@ int	draw_map(t_game_info *game)
 	int monitor;
 
 	monitor = 0;
+//	ft_memset(&game->ray, 0, sizeof(t_raycast));
+	// TODO: init_player_by_keycode(game) -> 좌우키로 회전;
 	paint_background(game);
 	while (monitor < SCREEN_WIDTH)
 	{

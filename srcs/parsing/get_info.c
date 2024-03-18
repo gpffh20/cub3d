@@ -15,5 +15,6 @@ void	get_info(char *map_file, t_game_info *game)
 		free(line);
 		line = get_next_line(fd);
 	}
+	check_xpm(game);
 	close(fd);
 }
