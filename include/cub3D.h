@@ -7,6 +7,9 @@
 # define SIDE 1
 # define MIDDLE 2
 
+# define HOR_LINE 0
+# define VER_LINE 1
+
 # define KEY_W 13
 # define KEY_S 1
 # define KEY_A 0
@@ -58,8 +61,8 @@ typedef struct s_texture
 typedef struct s_raycast
 {
 	t_point_double	ray_dir;
-	t_point_double	side_dist;
 	t_point_double	delta_dist;
+	t_point_double	side_dist;
 	t_point_double	player; // map 좌표 double
 	t_point_int			player_pos; // map section 좌표 int
 	t_point_int			step_dir;
@@ -67,7 +70,7 @@ typedef struct s_raycast
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
-	double			hit;
+	int				hit_ratio;
 }	t_raycast;
 
 typedef struct s_game_info
@@ -76,6 +79,7 @@ typedef struct s_game_info
 	t_texture	texture;
 	t_point_double view_dir;
 	t_point_double plane;
+	double perp_wall_dist;
 	void	*mlx;
 	void	*win;
 	char	*no_path;
@@ -87,7 +91,6 @@ typedef struct s_game_info
 	char	**map;
 	int		map_width;
 	int		map_height;
-	// t_point_int	player;
 	int		player_cnt;
 	int		map_start;
 }				t_game_info;

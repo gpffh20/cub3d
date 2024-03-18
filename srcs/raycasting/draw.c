@@ -52,29 +52,51 @@ void	init_vectors(t_raycast *ray, t_game_info *game)
 	}
 }
 
-// void	dda(t_game_info *game, t_raycast *ray)
-// {
-// 	int hit_flag;
+void	dda(t_game_info *game, t_raycast *ray)
+{
+	int hit_flag;
 
-// 	hit_flag = 0;
-// 	while (hit_flag == 0)
-// 	{
-// 		if (ray->side_dist.x < ray->side_dist.y)
-// 		{
-// 			ray->side_dist.x += ray->delta_dist.x;
-// 			ray->player_pos.x += ray->step_dir.x;
-// 			ray->side = 0;
-// 		}
-// 		else
-// 		{
-// 			ray->side_dist.y += ray->delta_dist.y;
-// 			ray->player_pos.y += ray->step_dir.y;
-// 			ray->side = 1;
-// 		}
-// 		if (game->map[ray->player_pos.y][ray->player_pos.x] == '1')
-// 			hit_flag = 1;
-// 	}
-// }
+	hit_flag = 0;
+	while (hit_flag == 0)
+	{
+		if (ray->side_dist.x < ray->side_dist.y)
+		{
+			ray->side = HOR_LINE;
+			ray->side_dist.x += ray->delta_dist.x;
+			ray->player_pos.x += ray->step_dir.x;
+		}
+		else
+		{
+			ray->side = VER_LINE;
+			ray->side_dist.y += ray->delta_dist.y;
+			ray->player_pos.y += ray->step_dir.y;
+		}
+		if (game->map[ray->player_pos.y][ray->player_pos.x] == '1')
+			hit_flag = 1;
+	}
+}
+
+void	calc_wall_length(t_game_info *game, t_raycast *ray)
+{
+	if (ray->side == VER_LINE)
+	{
+		game->perp_wall_dist = (ray->player_pos.x - game->ray.player.x + (1 - ray->step_dir.x) / 2) / ray->ray_dir.x;
+		ray->hit_ratio = ray->player.x + game->perp_wall_dist * ray->ray_dir.x;
+	}
+	else
+	{
+		game->perp_wall_dist = (ray->player_pos.y - game->ray.player.y + (1 - ray->step_dir.y) / 2) / ray->ray_dir.y;
+		ray->hit_ratio = ray->player.y + game->perp_wall_dist * ray->ray_dir.y;
+	}
+	ray->hit_ratio -= floor(ray->hit_ratio);
+	ray->line_height = (int)(SCREEN_HEIGHT / game->perp_wall_dist);
+	ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
+	ray->draw_end = ray->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	if (ray->draw_end >= SCREEN_HEIGHT)
+		ray->draw_end = SCREEN_HEIGHT - 1;
+}
 
 void	draw_map(t_game_info *game)
 {
@@ -86,7 +108,24 @@ void	draw_map(t_game_info *game)
 	{
 		calc_ray_params(game, &game->ray, monitor);
 		init_vectors(&game->ray, game);
-		// TODO: dda 알고리즘 구현
+		dda(game, &game->ray);
+		calc_wall_length(game, &game->ray);
+
+	// 구조체 값 확인 코드
+	// printf("Monitor: %d\n", monitor);
+	// printf("Ray Direction: (%f, %f)\n", game->ray.ray_dir.x, game->ray.ray_dir.y);
+	// printf("Delta Distance: (%f, %f)\n", game->ray.delta_dist.x, game->ray.delta_dist.y);
+	// printf("Side Distance: (%f, %f)\n", game->ray.side_dist.x, game->ray.side_dist.y);
+	// printf("Player Position: (%f, %f)\n", game->ray.player.x, game->ray.player.y);
+	// printf("Player Map Position: (%d, %d)\n", game->ray.player_pos.x, game->ray.player_pos.y);
+	// printf("Step Direction: (%d, %d)\n", game->ray.step_dir.x, game->ray.step_dir.y);
+	// printf("Side: %d\n", game->ray.side);
+	// printf("Line Height: %d\n", game->ray.line_height);
+	// printf("Draw Start: %d, Draw End: %d\n", game->ray.draw_start, game->ray.draw_end);
+	// printf("Hit Ratio: %d\n\n", game->ray.hit_ratio);
+	// printf("draw_start: %d, draw_end: %d\n", game->ray.draw_start, game->ray.draw_end);
+
+		// TODO: 부딛힌 벽 방향, 좌표 기준으로 mlx 값 저장해둬야함
 		monitor++;
 	}
 	return ;
@@ -103,5 +142,4 @@ void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor)
 	ray->player_pos.y = (int)game->ray.player.y;
 	ray->delta_dist.x = fabs(1 / ray->ray_dir.x);
 	ray->delta_dist.y = fabs(1 / ray->ray_dir.y);
-	// TODO: side_dist 초기화는 dda에서 하기
 }
