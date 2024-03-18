@@ -91,14 +91,17 @@ void	calc_wall_length(t_game_info *game, t_raycast *ray)
 	{
 		game->perp_wall_dist = ray->side_dist.y - ray->delta_dist.y;
 		ray->hit_ratio = ray->player.x + game->perp_wall_dist * ray->ray_dir.x;
+		if (ray->ray_dir.y < 0)
+			ray->hit_ratio = 1 - ray->hit_ratio;
 	}
 	else
 	{
 		game->perp_wall_dist = ray->side_dist.x - ray->delta_dist.x;
 		ray->hit_ratio = ray->player.y + game->perp_wall_dist * ray->ray_dir.y;
+		if (ray->ray_dir.x > 0)
+			ray->hit_ratio = 1 - ray->hit_ratio;
 	}
 	ray->hit_ratio -= floor(ray->hit_ratio);
-	// 여기부터!
 	ray->line_height = (int)(SCREEN_HEIGHT / game->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
 	ray->draw_end = ray->line_height / 2 + SCREEN_HEIGHT / 2;
@@ -115,10 +118,10 @@ void choose_texture(t_game_info *game, t_raycast *ray)
 		ray->wall_type = &game->ea_texture;
 	else if (ray->side == HOR_LINE && ray->ray_dir.x < 0)
 		ray->wall_type = &game->we_texture;
-	else if (ray->side == VER_LINE && ray->ray_dir.y > 0)
-		ray->wall_type = &game->no_texture;
 	else if (ray->side == VER_LINE && ray->ray_dir.y < 0)
 		ray->wall_type = &game->so_texture;
+	else if (ray->side == VER_LINE && ray->ray_dir.y > 0)
+		ray->wall_type = &game->no_texture;
 }
 
 int	mapping_int(int num, int in_max, int out_max)
@@ -148,11 +151,13 @@ int	get_color_in_texture(t_texture *component, int x, int y)
 void wall_in_range(t_game_info *game, int monitor)
 {
 	int		i;
+	int 	y;
 	int		color;
 	t_point_int	texture_pixel;
 	t_texture	*using_image;
 
 	i = 0;
+	y = (SCREEN_HEIGHT / 2) - (game->ray.line_height / 2);
 	using_image = game->ray.wall_type;
 	while (i < game->ray.line_height)
 	{
@@ -160,7 +165,7 @@ void wall_in_range(t_game_info *game, int monitor)
 		texture_pixel.y = mapping_int(i, game->ray.line_height, using_image->height);
 		color = get_color_in_texture(using_image,
 				texture_pixel.x, texture_pixel.y);
-		my_mlx_pixel_put(&game->window, monitor, game->ray.draw_start + i, color);
+		my_mlx_pixel_put(&game->window, monitor, y + i, color);
 		i++;
 	}
 }
