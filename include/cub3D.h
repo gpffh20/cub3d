@@ -141,4 +141,12 @@ void	init_texture(t_game_info *game);
 
 void check_xpm(t_game_info *game);
 
+
+void	mlx_pixel_put_once(t_texture *img, int x, int y, int color);
+void	paint_background(t_game_info *game);
+void	init_vectors(t_raycast *ray, t_game_info *game);
+void	dda(t_game_info *game, t_raycast *ray);
+void	calc_wall_length(t_game_info *game, t_raycast *ray);
+void	choose_texture(t_game_info *game, t_raycast *ray);
+
 #endif
