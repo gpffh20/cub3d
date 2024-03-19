@@ -14,7 +14,7 @@ void	init_vectors(t_raycast *ray, t_game_info *game)
 	}
 	if (ray->ray_dir.y < 0)
 	{
-		ray->step_dir.y = -1;
+		ray->step_dir.y = -1; // 확인 필요
 		ray->side_dist.y = (game->ray.player.y - ray->player_pos.y) * ray->delta_dist.y;
 	}
 	else
