@@ -4,8 +4,9 @@
 # define FAIL -1
 # define SUCCESS 0
 
-# define SIDE 1
+# define SIDE_FIRST 1
 # define MIDDLE 2
+# define SIDE_LAST 3
 
 # define TRUE 1
 # define FALSE 0
