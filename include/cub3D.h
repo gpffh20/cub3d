@@ -1,7 +1,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define FAIL -1
 # define SUCCESS 0
 
 # define SIDE_FIRST 1
@@ -11,8 +10,8 @@
 # define TRUE 1
 # define FALSE 0
 
-# define HOR_LINE 0
-# define VER_LINE 1
+# define DECIDE_W_OR_E 0
+# define DECIDE_N_OR_S 1
 
 # define KEY_W 13
 # define KEY_S 1
@@ -21,6 +20,7 @@
 # define ROTATE_LEFT 123
 # define ROTATE_RIGHT 124
 # define ESC 53
+# define CLICK_CLOSE 17
 
 # define KEY_RELEASE 3
 # define KEY_PRESS 2
@@ -28,7 +28,7 @@
 # define SCREEN_WIDTH 1150
 # define SCREEN_HEIGHT 800
 
-# define MOVE_SPEED 0.05
+# define MOVE_SPEED 0.1
 # define ROTATE_SPEED 0.05
 
 # include <stdlib.h>

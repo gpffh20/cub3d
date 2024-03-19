@@ -12,13 +12,13 @@ void	check_color(char **color_info)
 		while (color_info[i][j])
 		{
 			if (!ft_isdigit(color_info[i][j]))
-				error_exit("Error: Invalid color1.\n");
+				error_exit("Error: Invalid color.\n");
 			j++;
 		}
 		i++;
 	}
 	if (i != 3)
-		error_exit("Error: Invalid color2.\n");
+		error_exit("Error: Invalid color.\n");
 }
 
 void	get_color(char type, char *line, t_game_info *game)

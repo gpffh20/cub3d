@@ -1,6 +1,6 @@
 NAME	= cub3D
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=address
 LDLIBS	= -Llibft -lft
 LDMLX	= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
@@ -25,10 +25,6 @@ SOURCES =	srcs/main.c \
 			srcs/raycasting/dda.c \
 			srcs/raycasting/calc_wall_length.c \
 			srcs/raycasting/choose_texture.c \
-
-
-
-
 
 
 OBJECTS	= $(SOURCES:.c=.o)

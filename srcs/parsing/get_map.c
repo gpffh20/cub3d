@@ -1,5 +1,25 @@
 #include "../../include/cub3D.h"
 
+void	reverse_map(t_game_info *game)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	j = game->map_height - 1;
+	while (i < j)
+	{
+		temp = game->map[i];
+		game->map[i] = game->map[j];
+		game->map[j] = temp;
+		i++;
+		j--;
+	}
+	game->ray.player.y = game->map_height - game->ray.player.y;
+}
+
+
 void	get_map(char *map_file, t_game_info *game)
 {
 	int		fd;
@@ -19,5 +39,6 @@ void	get_map(char *map_file, t_game_info *game)
 		free(line);
 		line = get_next_line(fd);
 	}
+	reverse_map(game);
 	close(fd);
 }

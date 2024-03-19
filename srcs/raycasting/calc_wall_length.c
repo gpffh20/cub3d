@@ -2,7 +2,7 @@
 
 void	calc_wall_length(t_game_info *game, t_raycast *ray)
 {
-	if (ray->side == VER_LINE)
+	if (ray->side == DECIDE_N_OR_S)
 	{
 		game->perp_wall_dist = ray->side_dist.y - ray->delta_dist.y;
 		ray->hit_ratio = ray->player.x + game->perp_wall_dist * ray->ray_dir.x;
