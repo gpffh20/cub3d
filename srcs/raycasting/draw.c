@@ -113,13 +113,13 @@ void	calc_wall_length(t_game_info *game, t_raycast *ray)
 void choose_texture(t_game_info *game, t_raycast *ray)
 {
 	if (ray->side == VER_LINE && ray->ray_dir.y > 0)
-		ray->wall_type = &game->no_texture;
-	else if (ray->side == VER_LINE && ray->ray_dir.y < 0)
 		ray->wall_type = &game->so_texture;
+	else if (ray->side == VER_LINE && ray->ray_dir.y < 0)
+		ray->wall_type = &game->no_texture;
 	else if (ray->side == HOR_LINE && ray->ray_dir.x > 0)
-		ray->wall_type = &game->ea_texture;
-	else if (ray->side == HOR_LINE && ray->ray_dir.x < 0)
 		ray->wall_type = &game->we_texture;
+	else if (ray->side == HOR_LINE && ray->ray_dir.x < 0)
+		ray->wall_type = &game->ea_texture;
 }
 
 int	fetch_pixel_color(t_texture *texture, int x, int y)
@@ -225,8 +225,8 @@ void move_to_east(t_game_info *game)
 {
 	t_point_double new_pos;
 
-	new_pos.x = game->ray.player.x + game->view_dir.x * MOVE_SPEED;
-	new_pos.y = game->ray.player.y - game->view_dir.y * MOVE_SPEED;
+	new_pos.x = game->ray.player.x + game->view_dir.y * MOVE_SPEED;
+	new_pos.y = game->ray.player.y - game->view_dir.x * MOVE_SPEED;
 	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
 	{
 		game->ray.player.x = new_pos.x;
@@ -238,8 +238,8 @@ void move_to_west(t_game_info *game)
 {
 	t_point_double new_pos;
 
-	new_pos.x = game->ray.player.x - game->view_dir.x * MOVE_SPEED;
-	new_pos.y = game->ray.player.y + game->view_dir.y * MOVE_SPEED;
+	new_pos.x = game->ray.player.x - game->view_dir.y * MOVE_SPEED;
+	new_pos.y = game->ray.player.y + game->view_dir.x * MOVE_SPEED;
 	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
 	{
 		game->ray.player.x = new_pos.x;
@@ -259,7 +259,7 @@ void	move_player(t_game_info *game)
 		move_to_west(game);
 }
 
-void ratate_to_right(t_game_info *game)
+void rotate_to_right(t_game_info *game)
 {
 	t_point_double old_dir;
 	t_point_double old_plane;
@@ -276,7 +276,7 @@ void ratate_to_right(t_game_info *game)
 	game->plane.y = old_plane.x * sin(rad) + old_plane.y * cos(rad);
 }
 
-void ratate_to_left(t_game_info *game)
+void rotate_to_left(t_game_info *game)
 {
 	t_point_double old_dir;
 	t_point_double old_plane;
@@ -296,9 +296,9 @@ void ratate_to_left(t_game_info *game)
 void rotate_player(t_game_info *game)
 {
 	if (game->move_flag.r == TRUE)
-		ratate_to_right(game);
+		rotate_to_right(game);
 	else if (game->move_flag.l == TRUE)
-		ratate_to_left(game);
+		rotate_to_left(game);
 }
 
 void	control_player(t_game_info *game)
