@@ -54,7 +54,6 @@ void init_texture(t_game_info *game)
 	game->ea_texture.img = mlx_xpm_file_to_image(game->mlx, game->ea_path, &game->ea_texture.width, &game->ea_texture.height);
 	game->ea_texture.addr = mlx_get_data_addr(game->ea_texture.img, &game->ea_texture.bpp, &game->ea_texture.line_length, &game->ea_texture.endian);
 	mlx_put_image_to_window(game->mlx, game->win, game->window.img, 0, 0);
-//	 mlx_put_image_to_window(game->mlx, game->win, game->no_texture.img, 0, 0);
 }
 
 void	init_game(t_game_info *game)
@@ -82,43 +81,42 @@ int	exit_game(t_game_info *game)
 {
 	mlx_destroy_window(game->mlx, game->win);
 	exit(0);
-	return (0);
 }
 
 int	key_press(int keycode, t_game_info *game)
 {
 	if (keycode == ROTATE_LEFT)
-		game->move_flag.rotate_l = TRUE;
+		game->move_flag.l = TRUE;
 	else if (keycode == ROTATE_RIGHT)
-		game->move_flag.rotate_r = TRUE;
+		game->move_flag.r = TRUE;
 	else if (keycode == KEY_W)
-		game->move_flag.move_n = TRUE;
+		game->move_flag.no = TRUE;
 	else if (keycode == KEY_S)
-		game->move_flag.move_s = TRUE;
+		game->move_flag.so = TRUE;
 	else if (keycode == KEY_D)
-		game->move_flag.move_e = TRUE;
+		game->move_flag.ea = TRUE;
 	else if (keycode == KEY_A)
-		game->move_flag.move_w = TRUE;
+		game->move_flag.we = TRUE;
 	else if (keycode == ESC)
 		exit_game(game);
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }
 
 int	key_release(int keycode, t_game_info *game)
 {
 	if (keycode == ROTATE_LEFT)
-		game->move_flag.rotate_l = FALSE;
+		game->move_flag.l = FALSE;
 	else if (keycode == ROTATE_RIGHT)
-		game->move_flag.rotate_r = FALSE;
+		game->move_flag.r = FALSE;
 	else if (keycode == KEY_W)
-		game->move_flag.move_n = FALSE;
+		game->move_flag.no = FALSE;
 	else if (keycode == KEY_S)
-		game->move_flag.move_s = FALSE;
+		game->move_flag.so = FALSE;
 	else if (keycode == KEY_D)
-		game->move_flag.move_e = FALSE;
+		game->move_flag.ea = FALSE;
 	else if (keycode == KEY_A)
-		game->move_flag.move_w = FALSE;
-	return (EXIT_SUCCESS);
+		game->move_flag.we = FALSE;
+	return (SUCCESS);
 }
 
 

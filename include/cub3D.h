@@ -21,15 +21,14 @@
 # define ROTATE_RIGHT 124
 # define ESC 53
 
-# define DESTROY 17
 # define KEY_RELEASE 3
 # define KEY_PRESS 2
 
-# define CEILING 1
-# define FLOOR 2
-
 # define SCREEN_WIDTH 1150
 # define SCREEN_HEIGHT 800
+
+# define MOVE_SPEED 0.05
+# define ROTATE_SPEED 0.05
 
 # include <stdlib.h>
 # include <fcntl.h>
@@ -53,13 +52,13 @@ typedef struct s_coordinate_point_double
 
 typedef struct s_texture
 {
-	void *img;
-	char *addr;
-	int bpp;
-	int line_length;
-	int endian;
-	int width;
-	int height;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
 }	t_texture;
 
 typedef struct s_raycast
@@ -68,24 +67,24 @@ typedef struct s_raycast
 	t_point_double	delta_dist;
 	t_point_double	side_dist;
 	t_point_double	player; // map 좌표 double
-	t_point_int			player_pos; // map section 좌표 int
-	t_point_int			step_dir;
-	t_texture	      *wall_type;
+	t_point_int		player_pos; // map section 좌표 int
+	t_point_int		step_dir;
+	t_texture		*wall_type;
 	int				side;
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
-	double				hit_ratio;
+	double			hit_ratio;
 }	t_raycast;
 
 typedef struct s_move_flag
 {
-	int	move_n;
-	int	move_s;
-	int	move_w;
-	int	move_e;
-	int	rotate_r;
-	int	rotate_l;
+	int	no;
+	int	so;
+	int	we;
+	int	ea;
+	int	r;
+	int	l;
 }	t_move_flag;
 
 typedef struct s_game_info
