@@ -1,6 +1,18 @@
 #include "../../include/cub3D.h"
 
-void	check_color(char **color_info)
+static void ft_free(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+static void	check_color(char **color_info)
 {
 	int i;
 	int j;

@@ -11,21 +11,33 @@ SOURCES =	srcs/main.c \
 			srcs/parsing/deep_check.c \
 			srcs/parsing/error_exit.c \
 			srcs/parsing/fill_map.c \
-			srcs/parsing/ft_free.c \
 			srcs/parsing/get_color.c \
 			srcs/parsing/get_info.c \
 			srcs/parsing/get_map.c \
 			srcs/parsing/get_path.c \
 			srcs/parsing/init_map.c	\
+			srcs/parsing/init_ray_dir.c \
 			srcs/parsing/invalid_file.c \
-			srcs/raycasting/draw.c \
-			srcs/raycasting/mlx_pixel_put_once.c \
-			srcs/raycasting/paint_background.c \
-			srcs/raycasting/init_vectors.c \
-			srcs/raycasting/dda.c \
+			srcs/raycasting/calc_ray_params.c \
 			srcs/raycasting/calc_wall_length.c \
 			srcs/raycasting/choose_texture.c \
-
+			srcs/raycasting/control_player.c \
+			srcs/raycasting/dda.c \
+			srcs/raycasting/draw_map.c \
+			srcs/raycasting/draw_texture.c \
+			srcs/raycasting/exit_game.c \
+			srcs/raycasting/fetch_pixel_color.c \
+			srcs/raycasting/init_game.c \
+			srcs/raycasting/init_move_flag.c \
+			srcs/raycasting/init_raycast.c \
+			srcs/raycasting/init_texture.c \
+			srcs/raycasting/init_vectors.c \
+			srcs/raycasting/is_wall.c \
+			srcs/raycasting/key_press_n_release.c \
+			srcs/raycasting/mlx_pixel_put_once.c \
+			srcs/raycasting/move_player.c \
+			srcs/raycasting/paint_background.c \
+			srcs/raycasting/rotate_player.c \
 
 OBJECTS	= $(SOURCES:.c=.o)
 

@@ -116,38 +116,42 @@ typedef struct s_game_info
 	t_move_flag	move_flag;
 }				t_game_info;
 
+// parsing
+void	check_line(char *line, t_game_info *game);
+void	check_map(char *line, t_game_info *game);
+void	check_map_valid(char *line, t_game_info *game, int type);
+void	deep_check(t_game_info *game, char *line, int i);
 void	error_exit(char *str);
-void	invalid_file(char *file_name);
+void	fill_map(char *line, t_game_info *game);
+void	get_color(char type, char *line, t_game_info *game);
 void	get_info(char *map_file, t_game_info *game);
 void	get_map(char *map_file, t_game_info *game);
-void	check_map_valid(char *line, t_game_info *game, int type);
-void	fill_map(char *line, t_game_info *game);
-void	deep_check(t_game_info *game, char *line, int i);
-void	check_line(char *line, t_game_info *game);
-char	**init_map(t_game_info *game);
-void	check_map(char *line, t_game_info *game);
-void	ft_free(char **str);
-void	get_color(char type, char *line, t_game_info *game);
 void	get_path(char type, char *line, t_game_info *game);
-void	paint_background(t_game_info *game);
+char	**init_map(t_game_info *game);
+void	init_ray_dir(t_game_info *game, char start_dir);
+void	invalid_file(char *file_name);
 
-int	draw_map(t_game_info *game);
-void	paint_background(t_game_info *game);
-void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor);
-void init_ray_dir(t_game_info *game, char start_dir);
-
-void	init_game(t_game_info *game);
-void	init_raycast(t_raycast *ray);
-void	init_texture(t_game_info *game);
-
-void check_xpm(t_game_info *game);
-
-
-void	mlx_pixel_put_once(t_texture *img, int x, int y, int color);
-void	paint_background(t_game_info *game);
-void	init_vectors(t_raycast *ray, t_game_info *game);
-void	dda(t_game_info *game, t_raycast *ray);
+// raycasting
+void	calc_ray_params(t_game_info *game, t_raycast *ray, int monitor);
 void	calc_wall_length(t_game_info *game, t_raycast *ray);
 void	choose_texture(t_game_info *game, t_raycast *ray);
+void	control_player(t_game_info *game);
+void	dda(t_game_info *game, t_raycast *ray);
+int		draw_map(t_game_info *game);
+void	draw_texture(t_game_info *game, int monitor);
+int		exit_game(t_game_info *game);
+int		fetch_pixel_color(t_texture *texture, int x, int y);
+void	init_game(t_game_info *game);
+void	init_move_flag(t_game_info *game);
+void 	init_raycast(t_raycast *ray);
+void	init_texture(t_game_info *game);
+void	init_vectors(t_raycast *ray, t_game_info *game);
+int		is_wall(t_game_info *game, int x, int y);
+int		key_press(int keycode, t_game_info *game);
+int		key_release(int keycode, t_game_info *game);
+void	mlx_pixel_put_once(t_texture *img, int x, int y, int color);
+void	move_player(t_game_info *game);
+void	paint_background(t_game_info *game);
+void	rotate_player(t_game_info *game);
 
 #endif
