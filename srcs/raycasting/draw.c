@@ -8,7 +8,6 @@ void	my_mlx_pixel_put(t_texture *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-
 void	paint_background(t_game_info *game)
 {
 	int	x;
@@ -51,12 +50,12 @@ void	init_vectors(t_raycast *ray, t_game_info *game)
 	}
 	if (ray->ray_dir.y < 0)
 	{
-		ray->step_dir.y = -1;
+		ray->step_dir.y = 1;
 		ray->side_dist.y = (game->ray.player.y - ray->player_pos.y) * ray->delta_dist.y;
 	}
 	else
 	{
-		ray->step_dir.y = 1;
+		ray->step_dir.y = -1;
 		ray->side_dist.y = (ray->player_pos.y + 1.0 - game->ray.player.y) * ray->delta_dist.y;
 	}
 }
