@@ -1,5 +1,26 @@
 #include "../../include/cub3D.h"
 
+void	check_color(char **color_info)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (color_info[i])
+	{
+		j = 0;
+		while (color_info[i][j])
+		{
+			if (!ft_isdigit(color_info[i][j]))
+				error_exit("Error: Invalid color1.\n");
+			j++;
+		}
+		i++;
+	}
+	if (i != 3)
+		error_exit("Error: Invalid color2.\n");
+}
+
 void	get_color(char type, char *line, t_game_info *game)
 {
 	int r;
@@ -8,6 +29,7 @@ void	get_color(char type, char *line, t_game_info *game)
 	char **color_info;
 
 	color_info = ft_split(line, ',');
+	check_color(color_info);
 	r = ft_atoi(color_info[0]);
 	g = ft_atoi(color_info[1]);
 	b = ft_atoi(color_info[2]);

@@ -11,9 +11,9 @@ void	fill_map(char *line, t_game_info *game)
 	{
 		game->map_start++;
 		if (game->map_start - 1 == 0)
-			check_map_valid(line, game, SIDE);
+			check_map_valid(line, game, SIDE_FIRST);
 		else if (game->map_start == game->map_height)
-			check_map_valid(line, game, SIDE);
+			check_map_valid(line, game, SIDE_LAST);
 		else
 			check_map_valid(line, game, MIDDLE);
 	}

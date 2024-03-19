@@ -19,6 +19,16 @@ SOURCES =	srcs/main.c \
 			srcs/parsing/init_map.c	\
 			srcs/parsing/invalid_file.c \
 			srcs/raycasting/draw.c \
+			srcs/raycasting/mlx_pixel_put_once.c \
+			srcs/raycasting/paint_background.c \
+			srcs/raycasting/init_vectors.c \
+			srcs/raycasting/dda.c \
+			srcs/raycasting/calc_wall_length.c \
+			srcs/raycasting/choose_texture.c \
+
+
+
+
 
 
 OBJECTS	= $(SOURCES:.c=.o)

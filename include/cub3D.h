@@ -4,8 +4,9 @@
 # define FAIL -1
 # define SUCCESS 0
 
-# define SIDE 1
+# define SIDE_FIRST 1
 # define MIDDLE 2
+# define SIDE_LAST 3
 
 # define TRUE 1
 # define FALSE 0
@@ -140,5 +141,13 @@ void	init_raycast(t_raycast *ray);
 void	init_texture(t_game_info *game);
 
 void check_xpm(t_game_info *game);
+
+
+void	mlx_pixel_put_once(t_texture *img, int x, int y, int color);
+void	paint_background(t_game_info *game);
+void	init_vectors(t_raycast *ray, t_game_info *game);
+void	dda(t_game_info *game, t_raycast *ray);
+void	calc_wall_length(t_game_info *game, t_raycast *ray);
+void	choose_texture(t_game_info *game, t_raycast *ray);
 
 #endif
