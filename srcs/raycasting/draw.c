@@ -65,7 +65,7 @@ void	draw_texture(t_game_info *game, int monitor)
 
 int is_wall(t_game_info *game, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= game->map_width || y >= game->map_height)
+	if (x < 1 || y < 1 || x > game->map_width - 1 || y > game->map_height - 1)
 		return (TRUE);
 	if (game->map[y][(int)game->ray.player.x] == '0' &&
 		game->map[(int)game->ray.player.y][x] == '0')
@@ -79,7 +79,8 @@ void move_to_north(t_game_info *game)
 
 	new_pos.x = game->ray.player.x + game->view_dir.x * MOVE_SPEED;
 	new_pos.y = game->ray.player.y + game->view_dir.y * MOVE_SPEED;
-	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+	if (!is_wall(game, (int)(new_pos.x + 0.003), (int)(new_pos.y + 0.003)) &&
+		!is_wall(game, (int)(new_pos.x - 0.003), (int)(new_pos.y - 0.003)))
 	{
 		game->ray.player.x = new_pos.x;
 		game->ray.player.y = new_pos.y;
@@ -92,7 +93,8 @@ void move_to_south(t_game_info *game)
 
 	new_pos.x = game->ray.player.x - game->view_dir.x * MOVE_SPEED;
 	new_pos.y = game->ray.player.y - game->view_dir.y * MOVE_SPEED;
-	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+	if (!is_wall(game, (int)(new_pos.x + 0.003), (int)(new_pos.y + 0.003)) &&
+		!is_wall(game, (int)(new_pos.x - 0.003), (int)(new_pos.y - 0.003)))
 	{
 		game->ray.player.x = new_pos.x;
 		game->ray.player.y = new_pos.y;
@@ -103,9 +105,10 @@ void move_to_east(t_game_info *game)
 {
 	t_point_double new_pos;
 
-	new_pos.x = game->ray.player.x + game->view_dir.y * MOVE_SPEED;
+	new_pos.x = game->ray.player.x + game->view_dir.y * MOVE_SPEED;		// +
 	new_pos.y = game->ray.player.y - game->view_dir.x * MOVE_SPEED;
-	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+	if (!is_wall(game, (int)(new_pos.x + 0.003), (int)(new_pos.y + 0.003)) &&
+		!is_wall(game, (int)(new_pos.x - 0.003), (int)(new_pos.y - 0.003)))
 	{
 		game->ray.player.x = new_pos.x;
 		game->ray.player.y = new_pos.y;
@@ -116,9 +119,10 @@ void move_to_west(t_game_info *game)
 {
 	t_point_double new_pos;
 
-	new_pos.x = game->ray.player.x - game->view_dir.y * MOVE_SPEED;
+	new_pos.x = game->ray.player.x - game->view_dir.y * MOVE_SPEED;		// -
 	new_pos.y = game->ray.player.y + game->view_dir.x * MOVE_SPEED;
-	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+	if (!is_wall(game, (int)(new_pos.x + 0.003), (int)(new_pos.y + 0.003)) &&
+		!is_wall(game, (int)(new_pos.x - 0.003), (int)(new_pos.y - 0.003)))
 	{
 		game->ray.player.x = new_pos.x;
 		game->ray.player.y = new_pos.y;
@@ -137,7 +141,7 @@ void	move_player(t_game_info *game)
 		move_to_west(game);
 }
 
-void rotate_to_right(t_game_info *game)
+void rotate_to_right(t_game_info *game)	// 아직 안건듦
 {
 	t_point_double old_dir;
 	t_point_double old_plane;
@@ -193,7 +197,7 @@ int	draw_map(t_game_info *game)
 
 	monitor = 0;
 	paint_background(game);
-	// control_player(game);
+	control_player(game);
 	while (monitor < SCREEN_WIDTH)
 	{
 		calc_ray_params(game, &game->ray, monitor);
