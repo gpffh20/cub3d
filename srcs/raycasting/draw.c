@@ -50,12 +50,12 @@ void	init_vectors(t_raycast *ray, t_game_info *game)
 	}
 	if (ray->ray_dir.y < 0)
 	{
-		ray->step_dir.y = 1;
+		ray->step_dir.y = -1; // 되돌림
 		ray->side_dist.y = (game->ray.player.y - ray->player_pos.y) * ray->delta_dist.y;
 	}
 	else
 	{
-		ray->step_dir.y = -1;
+		ray->step_dir.y = 1; // 되돌림
 		ray->side_dist.y = (ray->player_pos.y + 1 - game->ray.player.y) * ray->delta_dist.y;
 	}
 }
@@ -110,7 +110,6 @@ void	calc_wall_length(t_game_info *game, t_raycast *ray)
 		ray->draw_end = SCREEN_HEIGHT - 1;
 }
 
-// jj's logic start
 void choose_texture(t_game_info *game, t_raycast *ray)
 {
 	if (ray->side == VER_LINE && ray->ray_dir.y > 0)
@@ -316,14 +315,14 @@ int	draw_map(t_game_info *game)
 
 	monitor = 0;
 	paint_background(game);
-	// control_player(game);
+	control_player(game); // key 별 움직이는거 구현한 부분
 	while (monitor < SCREEN_WIDTH)
 	{
 		calc_ray_params(game, &game->ray, monitor);
 		init_vectors(&game->ray, game);
 		dda(game, &game->ray);
-		choose_texture(game, &game->ray);
 		calc_wall_length(game, &game->ray);
+		choose_texture(game, &game->ray);
 		draw_texture(game, monitor);
 		monitor++;
 	}
