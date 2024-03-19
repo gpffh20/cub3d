@@ -119,6 +119,15 @@ int	key_release(int keycode, t_game_info *game)
 	return (SUCCESS);
 }
 
+void	init_move_flag(t_game_info *game)
+{
+	game->move_flag.l = FALSE;
+	game->move_flag.r = FALSE;
+	game->move_flag.no = FALSE;
+	game->move_flag.so = FALSE;
+	game->move_flag.ea = FALSE;
+	game->move_flag.we = FALSE;
+}
 
 int main(int ac, char **av)
 {
@@ -131,9 +140,10 @@ int main(int ac, char **av)
 	get_info(av[1], &game);
 	get_map(av[1], &game);
 	init_texture(&game);
+	init_move_flag(&game);
 	mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
 	mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
-	mlx_key_hook(game.win, &exit_game, &game);
+	mlx_hook(game.win, ESC, 0, &exit_game, &game);
 	mlx_loop_hook(game.mlx, &draw_map, &game);
 	mlx_loop(game.mlx);
 	return (0);
