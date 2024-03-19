@@ -2,7 +2,7 @@
 
 int	draw_map(t_game_info *game)
 {
-	int monitor;
+	int	monitor;
 
 	monitor = 0;
 	paint_background(game);
@@ -18,5 +18,5 @@ int	draw_map(t_game_info *game)
 		monitor++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->window.img, 0, 0);
-	return SUCCESS;
+	return (SUCCESS);
 }

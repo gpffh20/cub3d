@@ -1,8 +1,8 @@
 #include "../../include/cub3D.h"
 
-static void move_to_north(t_game_info *game)
+static void	move_to_north(t_game_info *game)
 {
-	t_point_double new_pos;
+	t_point_double	new_pos;
 
 	new_pos.x = game->ray.player.x + game->view_dir.x * MOVE_SPEED;
 	new_pos.y = game->ray.player.y + game->view_dir.y * MOVE_SPEED;
@@ -14,9 +14,9 @@ static void move_to_north(t_game_info *game)
 	}
 }
 
-static void move_to_south(t_game_info *game)
+static void	move_to_south(t_game_info *game)
 {
-	t_point_double new_pos;
+	t_point_double	new_pos;
 
 	new_pos.x = game->ray.player.x - game->view_dir.x * MOVE_SPEED;
 	new_pos.y = game->ray.player.y - game->view_dir.y * MOVE_SPEED;
@@ -28,11 +28,11 @@ static void move_to_south(t_game_info *game)
 	}
 }
 
-static void move_to_east(t_game_info *game)
+static void	move_to_east(t_game_info *game)
 {
-	t_point_double new_pos;
+	t_point_double	new_pos;
 
-	new_pos.x = game->ray.player.x + game->view_dir.y * MOVE_SPEED;		// +
+	new_pos.x = game->ray.player.x + game->view_dir.y * MOVE_SPEED;
 	new_pos.y = game->ray.player.y - game->view_dir.x * MOVE_SPEED;
 	if (!is_wall(game, (int)(new_pos.x + 0.003), (int)(new_pos.y + 0.003)) &&
 		!is_wall(game, (int)(new_pos.x - 0.003), (int)(new_pos.y - 0.003)))
@@ -42,11 +42,11 @@ static void move_to_east(t_game_info *game)
 	}
 }
 
-static void move_to_west(t_game_info *game)
+static void	move_to_west(t_game_info *game)
 {
-	t_point_double new_pos;
+	t_point_double	new_pos;
 
-	new_pos.x = game->ray.player.x - game->view_dir.y * MOVE_SPEED;		// -
+	new_pos.x = game->ray.player.x - game->view_dir.y * MOVE_SPEED;
 	new_pos.y = game->ray.player.y + game->view_dir.x * MOVE_SPEED;
 	if (!is_wall(game, (int)(new_pos.x + 0.003), (int)(new_pos.y + 0.003)) &&
 		!is_wall(game, (int)(new_pos.x - 0.003), (int)(new_pos.y - 0.003)))

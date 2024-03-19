@@ -1,6 +1,6 @@
 #include "../../include/cub3D.h"
 
-void  init_raycast(t_raycast *ray)
+void	init_raycast(t_raycast *ray)
 {
 	ray->ray_dir.x = 0;
 	ray->ray_dir.y = 0;
