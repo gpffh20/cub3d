@@ -51,12 +51,12 @@ void	init_vectors(t_raycast *ray, t_game_info *game)
 	}
 	if (ray->ray_dir.y < 0)
 	{
-		ray->step_dir.y = -1;
+		ray->step_dir.y = 1;
 		ray->side_dist.y = (game->ray.player.y - ray->player_pos.y) * ray->delta_dist.y;
 	}
 	else
 	{
-		ray->step_dir.y = 1;
+		ray->step_dir.y = -1;
 		ray->side_dist.y = (ray->player_pos.y + 1.0 - game->ray.player.y) * ray->delta_dist.y;
 	}
 }
@@ -192,14 +192,138 @@ void wall_out_range(t_game_info *game, int monitor)
 }
 // jj's logic end
 
+//int is_wall(t_game_info *game, int x, int y)
+//{
+//	if (x < 0 || y < 0 || x >= game->map_width || y >= game->map_height)
+//		return (TRUE);
+//	if (game->map[y][(int)game->ray.player.x] == '0' &&
+//		game->map[(int)game->ray.player.y][x] == '0')
+//		return (FALSE);
+//	return (TRUE);
+//}
+//
+//void move_to_north(t_game_info *game)
+//{
+//	t_point_double new_pos;
+//
+//	new_pos.x = game->ray.player.x + game->view_dir.x * MOVE_SPEED;
+//	new_pos.y = game->ray.player.y + game->view_dir.y * MOVE_SPEED;
+//	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+//	{
+//		game->ray.player.x = new_pos.x;
+//		game->ray.player.y = new_pos.y;
+//	}
+//}
+//
+//void move_to_south(t_game_info *game)
+//{
+//	t_point_double new_pos;
+//
+//	new_pos.x = game->ray.player.x - game->view_dir.x * MOVE_SPEED;
+//	new_pos.y = game->ray.player.y - game->view_dir.y * MOVE_SPEED;
+//	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+//	{
+//		game->ray.player.x = new_pos.x;
+//		game->ray.player.y = new_pos.y;
+//	}
+//}
+//
+//void move_to_east(t_game_info *game)
+//{
+//	t_point_double new_pos;
+//
+//	new_pos.x = game->ray.player.x + game->view_dir.x * MOVE_SPEED;
+//	new_pos.y = game->ray.player.y - game->view_dir.y * MOVE_SPEED;
+//	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+//	{
+//		game->ray.player.x = new_pos.x;
+//		game->ray.player.y = new_pos.y;
+//	}
+//}
+//
+//void move_to_west(t_game_info *game)
+//{
+//	t_point_double new_pos;
+//
+//	new_pos.x = game->ray.player.x - game->view_dir.x * MOVE_SPEED;
+//	new_pos.y = game->ray.player.y + game->view_dir.y * MOVE_SPEED;
+//	if (!is_wall(game, (int)new_pos.x, (int)new_pos.y))
+//	{
+//		game->ray.player.x = new_pos.x;
+//		game->ray.player.y = new_pos.y;
+//	}
+//}
+//
+//void	move_player(t_game_info *game)
+//{
+//	if (game->move_flag.no == TRUE)
+//		move_to_north(game);
+//	else if (game->move_flag.so == TRUE)
+//		move_to_south(game);
+//	else if (game->move_flag.ea == TRUE)
+//		move_to_east(game);
+//	else if (game->move_flag.we == TRUE)
+//		move_to_west(game);
+//}
+//
+//void ratate_to_right(t_game_info *game)
+//{
+//	t_point_double old_dir;
+//	t_point_double old_plane;
+//	double	rad;
+//
+//	rad = asin(tan(M_PI / 6)) * (-ROTATE_SPEED);
+//	old_dir.x = game->view_dir.x;
+//	old_dir.y = game->view_dir.y;
+//	old_plane.x = game->plane.x;
+//	old_plane.y = game->plane.y;
+//	game->view_dir.x = old_dir.x * cos(rad) - old_dir.y * sin(rad);
+//	game->view_dir.y = old_dir.x * sin(rad) + old_dir.y * cos(rad);
+//	game->plane.x = old_plane.x * cos(rad) - old_plane.y * sin(rad);
+//	game->plane.y = old_plane.x * sin(rad) + old_plane.y * cos(rad);
+//}
+//
+//void ratate_to_left(t_game_info *game)
+//{
+//	t_point_double old_dir;
+//	t_point_double old_plane;
+//	double	rad;
+//
+//	rad = asin(tan(M_PI / 6)) * ROTATE_SPEED;
+//	old_dir.x = game->view_dir.x;
+//	old_dir.y = game->view_dir.y;
+//	old_plane.x = game->plane.x;
+//	old_plane.y = game->plane.y;
+//	game->view_dir.x = old_dir.x * cos(rad) - old_dir.y * sin(rad);
+//	game->view_dir.y = old_dir.x * sin(rad) + old_dir.y * cos(rad);
+//	game->plane.x = old_plane.x * cos(rad) - old_plane.y * sin(rad);
+//	game->plane.y = old_plane.x * sin(rad) + old_plane.y * cos(rad);
+//}
+//
+//void rotate_player(t_game_info *game)
+//{
+//	if (game->move_flag.r == TRUE)
+//		ratate_to_right(game);
+//	else if (game->move_flag.l == TRUE)
+//		ratate_to_left(game);
+//}
+//
+//
+//void	control_player(t_game_info *game)
+//{
+//	if (game->move_flag.no == TRUE || game->move_flag.so == TRUE || game->move_flag.ea == TRUE || game->move_flag.we == TRUE)
+//		move_player(game);
+//	else if (game->move_flag.r == TRUE || game->move_flag.l == TRUE)
+//		rotate_player(game);
+//}
+
 int	draw_map(t_game_info *game)
 {
 	int monitor;
 
 	monitor = 0;
-//	ft_memset(&game->ray, 0, sizeof(t_raycast));
-	// TODO: init_player_by_keycode(game) -> 좌우키로 회전;
 	paint_background(game);
+//	control_player(game);
 	while (monitor < SCREEN_WIDTH)
 	{
 		calc_ray_params(game, &game->ray, monitor);
