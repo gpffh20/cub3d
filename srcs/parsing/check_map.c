@@ -3,16 +3,16 @@
 void	init_north(t_game_info *game)
 {
 	game->view_dir.x = 0;
-	game->view_dir.y = 1;
-	game->plane.x = 0.66;
+	game->view_dir.y = -1;
+	game->plane.x = -0.66;
 	game->plane.y = 0;
 }
 
 void	init_south(t_game_info *game)
 {
 	game->view_dir.x = 0;
-	game->view_dir.y = -1;
-	game->plane.x = -0.66;
+	game->view_dir.y = 1;
+	game->plane.x = 0.66;
 	game->plane.y = 0;
 }
 
