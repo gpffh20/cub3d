@@ -24,7 +24,7 @@ static void	check_side_first(char *line, t_game_info *game)
 		game->map[game->map_start - 1][i] = line[i];
 		i++;
 	}
-	while (i < game->map_width)
+	while (line[i] && i < game->map_width)
 	{
 		game->map[game->map_start - 1][i] = ' ';
 		i++;
@@ -46,7 +46,7 @@ static void	check_side_last(char *line, t_game_info *game)
 			error_exit("Error: Invalid map.\n");
 		i++;
 	}
-	while (i < game->map_width)
+	while (line[i] && i < game->map_width)
 	{
 		game->map[game->map_start - 1][i] = ' ';
 		if (line[i] == ' ' && game->map[game->map_start - 2][i] == '0')
@@ -72,7 +72,7 @@ static void	check_middle(char *line, t_game_info *game)
 		}
 		i++;
 	}
-	while (i < game->map_width)
+	while (line[i] && i < game->map_width)
 	{
 		game->map[game->map_start - 1][i] = ' ';
 		i++;
