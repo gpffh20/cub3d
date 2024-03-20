@@ -1,7 +1,6 @@
 #include "../../include/cub3D.h"
 
-// TODO: 파일명은 init_mlx로 변경하고 함수명 아래랑 교환하기
-static void	init_mlx(t_game_info *game)
+static void	init_texture(t_game_info *game)
 {
 	game->no_texture.img = mlx_xpm_file_to_image(game->mlx, \
 			game->no_path, &game->no_texture.width, \
@@ -29,13 +28,13 @@ static void	init_mlx(t_game_info *game)
 			&game->ea_texture.endian);
 }
 
-void	init_texture(t_game_info *game)
+void	init_mlx(t_game_info *game)
 {
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	game->window.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->window.addr = mlx_get_data_addr(game->window.img, \
 			&game->window.bpp, &game->window.line_length, &game->window.endian);
-	init_mlx(game);
+	init_texture(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->window.img, 0, 0);
 }

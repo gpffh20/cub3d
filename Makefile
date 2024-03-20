@@ -30,7 +30,7 @@ SOURCES =	srcs/main.c \
 			srcs/raycasting/init_game.c \
 			srcs/raycasting/init_move_flag.c \
 			srcs/raycasting/init_raycast.c \
-			srcs/raycasting/init_texture.c \
+			srcs/raycasting/init_mlx.c \
 			srcs/raycasting/init_vectors.c \
 			srcs/raycasting/is_wall.c \
 			srcs/raycasting/key_press_n_release.c \

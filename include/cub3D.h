@@ -144,7 +144,7 @@ int		fetch_pixel_color(t_texture *texture, int x, int y);
 void	init_game(t_game_info *game);
 void	init_move_flag(t_game_info *game);
 void 	init_raycast(t_raycast *ray);
-void	init_texture(t_game_info *game);
+void	init_mlx(t_game_info *game);
 void	init_vectors(t_raycast *ray, t_game_info *game);
 int		is_wall(t_game_info *game, int x, int y);
 int		key_press(int keycode, t_game_info *game);
