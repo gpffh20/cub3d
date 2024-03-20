@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/03/20 09:20:17 by gykoh             #+#    #+#              #
+#    Updated: 2024/03/20 09:20:18 by gykoh            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME	= cub3D
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -fsanitize=address
@@ -30,7 +42,7 @@ SOURCES =	srcs/main.c \
 			srcs/raycasting/init_game.c \
 			srcs/raycasting/init_move_flag.c \
 			srcs/raycasting/init_raycast.c \
-			srcs/raycasting/init_texture.c \
+			srcs/raycasting/init_mlx.c \
 			srcs/raycasting/init_vectors.c \
 			srcs/raycasting/is_wall.c \
 			srcs/raycasting/key_press_n_release.c \
