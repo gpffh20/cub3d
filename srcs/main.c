@@ -6,7 +6,7 @@
 /*   By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 09:20:05 by gykoh             #+#    #+#             */
-/*   Updated: 2024/03/20 09:20:05 by gykoh            ###   ########.fr       */
+/*   Updated: 2024/03/20 09:27:18 by eushin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 	init_game(&game);
 	get_info(av[1], &game);
 	get_map(av[1], &game);
-	init_texture(&game);
+	init_mlx(&game);
 	init_move_flag(&game);
 	mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
 	mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
