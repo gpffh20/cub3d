@@ -6,13 +6,13 @@
 #    By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 09:20:17 by gykoh             #+#    #+#              #
-#    Updated: 2024/03/20 09:20:18 by gykoh            ###   ########.fr        #
+#    Updated: 2024/03/20 11:17:08 by gykoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= cub3D
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror
 LDLIBS	= -Llibft -lft
 LDMLX	= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 

@@ -6,7 +6,7 @@
 /*   By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 09:20:05 by gykoh             #+#    #+#             */
-/*   Updated: 2024/03/20 09:27:18 by eushin           ###   ########.fr       */
+/*   Updated: 2024/03/20 11:08:06 by gykoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int ac, char **av)
 	init_move_flag(&game);
 	mlx_hook(game.win, KEY_PRESS, 0, &key_press, &game);
 	mlx_hook(game.win, KEY_RELEASE, 0, &key_release, &game);
-	mlx_hook(game.win, ESC, 0, &exit_game, &game);
 	mlx_hook(game.win, CLICK_CLOSE, 0, &exit_game, &game);
 	mlx_loop_hook(game.mlx, &draw_map, &game);
 	mlx_loop(game.mlx);
