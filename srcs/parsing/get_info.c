@@ -1,8 +1,8 @@
 #include "../../include/cub3D.h"
 
-static void check_xpm(t_game_info *game)
+static void	check_xpm(t_game_info *game)
 {
-	int fd;
+	int	fd;
 
 	fd = open(game->no_path, O_RDONLY);
 	if (fd < 0 || close(fd) < 0)

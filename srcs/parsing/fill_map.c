@@ -2,7 +2,7 @@
 
 void	fill_map(char *line, t_game_info *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] && ft_isspace(line[i]))

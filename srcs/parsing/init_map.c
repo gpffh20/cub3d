@@ -3,7 +3,7 @@
 char	**init_map(t_game_info *game)
 {
 	char	**map;
-	int i;
+	int		i;
 
 	map = (char **)malloc(sizeof(char *) * (game->map_height + 1));
 	map[game->map_height] = NULL;
