@@ -2,7 +2,7 @@
 
 void	dda(t_game_info *game, t_raycast *ray)
 {
-	int hit_flag;
+	int	hit_flag;
 
 	hit_flag = 0;
 	while (hit_flag == 0)

@@ -1,10 +1,10 @@
 #include "../../include/cub3D.h"
 
-static void rotate_to_right(t_game_info *game)
+static void	rotate_to_right(t_game_info *game)
 {
-	t_point_double old_dir;
-	t_point_double old_plane;
-	double	rad;
+	t_point_double	old_dir;
+	t_point_double	old_plane;
+	double			rad;
 
 	rad = asin(tan(M_PI / 6)) * (-ROTATE_SPEED);
 	old_dir.x = game->view_dir.x;
@@ -17,11 +17,11 @@ static void rotate_to_right(t_game_info *game)
 	game->plane.y = old_plane.x * sin(rad) + old_plane.y * cos(rad);
 }
 
-static void rotate_to_left(t_game_info *game)
+static void	rotate_to_left(t_game_info *game)
 {
-	t_point_double old_dir;
-	t_point_double old_plane;
-	double	rad;
+	t_point_double	old_dir;
+	t_point_double	old_plane;
+	double			rad;
 
 	rad = asin(tan(M_PI / 6)) * ROTATE_SPEED;
 	old_dir.x = game->view_dir.x;
@@ -34,7 +34,7 @@ static void rotate_to_left(t_game_info *game)
 	game->plane.y = old_plane.x * sin(rad) + old_plane.y * cos(rad);
 }
 
-void rotate_player(t_game_info *game)
+void	rotate_player(t_game_info *game)
 {
 	if (game->move_flag.r == TRUE)
 		rotate_to_right(game);

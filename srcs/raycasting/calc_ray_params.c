@@ -1,8 +1,8 @@
 #include "../../include/cub3D.h"
 
-void calc_ray_params(t_game_info *game, t_raycast *ray, int monitor)
+void	calc_ray_params(t_game_info *game, t_raycast *ray, int monitor)
 {
-	double camera_x;
+	double	camera_x;
 
 	camera_x = (2 * monitor / (double)SCREEN_WIDTH) - 1;
 	ray->ray_dir.x = game->view_dir.x + game->plane.x * camera_x;

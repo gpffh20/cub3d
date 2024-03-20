@@ -1,8 +1,8 @@
 #include "../include/cub3D.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_game_info game;
+	t_game_info	game;
 
 	if (ac != 2)
 		error_exit("Error: Wrong number of arguments.\n");
