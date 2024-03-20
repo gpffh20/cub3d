@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 09:20:22 by gykoh             #+#    #+#             */
+/*   Updated: 2024/03/20 09:23:24 by gykoh            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -43,13 +55,13 @@ typedef struct s_coordinate_point_int
 {
 	int			x;
 	int			y;
-}				t_point_int;
+}	t_point_int;
 
 typedef struct s_coordinate_point_double
 {
 	double	x;
 	double	y;
-}				t_point_double;
+}	t_point_double;
 
 typedef struct s_texture
 {
@@ -67,8 +79,8 @@ typedef struct s_raycast
 	t_point_double	ray_dir;
 	t_point_double	delta_dist;
 	t_point_double	side_dist;
-	t_point_double	player; // map 좌표 double
-	t_point_int		player_pos; // map section 좌표 int
+	t_point_double	player;
+	t_point_int		player_pos;
 	t_point_int		step_dir;
 	t_texture		*wall_type;
 	int				side;
@@ -90,31 +102,30 @@ typedef struct s_move_flag
 
 typedef struct s_game_info
 {
-	void *mlx;
-	void *win;
-	t_raycast	ray;
-	t_point_double view_dir;
-	t_point_double plane;
-	t_texture window;
-	t_texture no_texture;
-	t_texture so_texture;
-	t_texture we_texture;
-	t_texture ea_texture;
-	char *no_path;
-	char *so_path;
-	char *we_path;
-	char *ea_path;
-	double perp_wall_dist;
-	char	**map;
-	int		map_width;
-	int		map_height;
-	int		player_cnt;
-	int		map_start;
-	int		ceiling_color;
-	int		floor_color;
-
-	t_move_flag	move_flag;
-}				t_game_info;
+	void			*mlx;
+	void			*win;
+	t_raycast		ray;
+	t_point_double	view_dir;
+	t_point_double	plane;
+	t_texture		window;
+	t_texture		no_texture;
+	t_texture		so_texture;
+	t_texture		we_texture;
+	t_texture		ea_texture;
+	char			*no_path;
+	char			*so_path;
+	char			*we_path;
+	char			*ea_path;
+	double			perp_wall_dist;
+	char			**map;
+	int				map_width;
+	int				map_height;
+	int				player_cnt;
+	int				map_start;
+	int				ceiling_color;
+	int				floor_color;
+	t_move_flag		move_flag;
+}	t_game_info;
 
 // parsing
 void	check_line(char *line, t_game_info *game);
@@ -143,7 +154,7 @@ int		exit_game(t_game_info *game);
 int		fetch_pixel_color(t_texture *texture, int x, int y);
 void	init_game(t_game_info *game);
 void	init_move_flag(t_game_info *game);
-void 	init_raycast(t_raycast *ray);
+void	init_raycast(t_raycast *ray);
 void	init_mlx(t_game_info *game);
 void	init_vectors(t_raycast *ray, t_game_info *game);
 int		is_wall(t_game_info *game, int x, int y);
