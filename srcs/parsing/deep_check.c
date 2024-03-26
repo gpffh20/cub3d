@@ -6,7 +6,7 @@
 /*   By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 09:18:27 by gykoh             #+#    #+#             */
-/*   Updated: 2024/03/20 09:18:33 by gykoh            ###   ########.fr       */
+/*   Updated: 2024/03/20 12:08:01 by gykoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	deep_check(t_game_info *game, char *line, int i)
 		return ;
 	if (line[0] != '1' && line[0] != ' ')
 		error_exit("Error: Invalid map.\n");
-	if (game->map[game->map_start - 2][i] == ' ' || line[i - 1] == ' ')
+	if (game->map[game->map_start - 2][i] == ' ' || \
+	line[i - 1] == ' ' || line[i + 1] == ' ')
 		error_exit("Error: Invalid map.\n");
 }
