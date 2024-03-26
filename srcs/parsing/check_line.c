@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eushin <eushin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 09:18:12 by gykoh             #+#    #+#             */
-/*   Updated: 2024/03/20 09:18:13 by gykoh            ###   ########.fr       */
+/*   Updated: 2024/03/26 22:13:29 by eushin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	check_line(char *line, t_game_info *game)
 {
 	int	i;
 
+	if (game->map_start > 0 && line[ft_strlen(line)-2] == '0')
+		error_exit("Error: Invalid map.\n");
 	if (!ft_strncmp("NO ", line, 3) || !ft_strncmp("SO ", line, 3)
 		|| !ft_strncmp("WE ", line, 3) || !ft_strncmp("EA ", line, 3))
 		get_path(line[0], line, game);

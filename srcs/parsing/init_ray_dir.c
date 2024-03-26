@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ray_dir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gykoh <gykoh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eushin <eushin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 09:18:46 by gykoh             #+#    #+#             */
-/*   Updated: 2024/03/20 09:18:47 by gykoh            ###   ########.fr       */
+/*   Updated: 2024/03/26 22:08:18 by eushin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	init_east(t_game_info *game)
 	game->view_dir.x = 1;
 	game->view_dir.y = 0;
 	game->plane.x = 0;
-	game->plane.y = 0.66;
+	game->plane.y = -0.66;
 }
 
 static void	init_west(t_game_info *game)
